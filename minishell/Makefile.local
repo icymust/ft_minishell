@@ -1,0 +1,8 @@
+READLINE_PREFIX := $(shell brew --prefix readline)
+
+ifeq ($(READLINE_PREFIX),)
+$(error Homebrew readline not found. Run: brew install readline)
+endif
+
+INCLUDE += -I$(READLINE_PREFIX)/include
+CFLAGS += -L$(READLINE_PREFIX)/lib

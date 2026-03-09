@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 18:21:00 by steven            #+#    #+#             */
-/*   Updated: 2026/03/08 12:54:01 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/09 12:20:35 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ t_cmd_set	*new_cmd_in_pl(t_data *data, t_cmd_set *current_set, char *name)
 {
 	if (!current_set)
 	{
-		current_set = new_cmd_set(CMD_SIMPLE, name);
+		current_set = new_cmd_set(name);
 		data->t_pipeline = current_set;
 	}
 	else
 	{
-		current_set->next = new_cmd_set(CMD_SIMPLE, name);
+		current_set->next = new_cmd_set(name);
 		current_set = current_set->next;
 	}
 	return (current_set);
@@ -36,7 +36,7 @@ int	create_pipeline(t_data *data)
 		return (1);
 	data->t_pipeline = NULL;
 	current_set = NULL;
-	printf("[DEBUG] Starting pipeline creation\n");
+	// printf("[DEBUG] Starting pipeline creation\n");
 	if (!data->tokens)
 	{
 		printf("[DEBUG] No tokens found for pipeline creation\n");
@@ -98,7 +98,7 @@ int	execute_pipeline(t_data *data)
 	if (!step)
 		printf("[DEBUG] No commands to execute in pipeline\n");
 	while (step) {
-		printf("[DEBUG PIPELINE] Command: %s\n", step->name);
+		// printf("[DEBUG PIPELINE] Command: %s\n", step->name);
 		// print_cmd_set(step);
 
 		// Создаём пайп, если есть следующая команда

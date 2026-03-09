@@ -52,19 +52,8 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
-typedef enum e_cmd_type
-{
-	CMD_SIMPLE,
-	CMD_PIPE,
-	CMD_REDIRECT_IN,
-	CMD_REDIRECT_OUT,
-	CMD_APPEND,
-	CMD_HEREDOC
-}						t_cmd_type;
-
 typedef struct s_cmd_set
 {
-	t_cmd_type			type;
 	char				*name;
 	char				*infile;
 	char				*outfile;
@@ -103,7 +92,7 @@ int 					init_data(t_data *data, char **env);
 void					free_data(t_data *data);
 char 					**copy_env(char **env);
 
-t_cmd_set 				*new_cmd_set(t_cmd_type type, char *name);
+t_cmd_set 				*new_cmd_set(char *name);
 int 					add_arg_to_cmd_set(t_cmd_set *cmd_set, char *arg);
 void 					free_cmd_set(t_cmd_set *cmd_set);
 

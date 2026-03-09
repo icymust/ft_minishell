@@ -77,7 +77,6 @@ void print_cmd_set(t_cmd_set *cmd_set)
     if (!cmd_set)
         return;
     printf("Cmd Set:\n");
-    printf("Type: %d\n", cmd_set->type);
     printf("Name: %s\n", cmd_set->name);
     printf("Infile: %s\n", cmd_set->infile);
     printf("Outfile: %s\n", cmd_set->outfile);

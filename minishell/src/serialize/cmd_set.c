@@ -16,7 +16,6 @@ void init_cmd_set(t_cmd_set *cmd_set)
 {
     if (!cmd_set)
         return;
-    cmd_set->type = CMD_SIMPLE;
     cmd_set->name = NULL;
     cmd_set->infile = NULL;
     cmd_set->outfile = NULL;
@@ -29,7 +28,7 @@ void init_cmd_set(t_cmd_set *cmd_set)
     cmd_set->next = NULL;
 }
 
-t_cmd_set *new_cmd_set(t_cmd_type type, char *name)
+t_cmd_set *new_cmd_set(char *name)
 {
     t_cmd_set *cmd_set;
 
@@ -38,7 +37,6 @@ t_cmd_set *new_cmd_set(t_cmd_type type, char *name)
     if (!cmd_set)
         return (NULL);
     init_cmd_set(cmd_set);
-    cmd_set->type = type;
     if (name)
         cmd_set->name = ft_strdup(name);
     else

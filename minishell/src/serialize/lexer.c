@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steven <steven@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:21:23 by steven            #+#    #+#             */
-/*   Updated: 2026/02/27 09:51:24 by steven           ###   ########.fr       */
+/*   Updated: 2026/03/09 12:31:51 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int lexer(t_data *data)
             lex_words(token, previous_token);
         else if (token->ast_type == TOKEN_OPERATOR)
             lex_operators(token);
-        print_colored_token(previous_token, token);
+        // print_colored_token(previous_token, token);
         previous_token = token;
         //debug_print_enum(token->ast_type);
         token = token->next;

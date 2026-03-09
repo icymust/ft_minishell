@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 19:50:22 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/06 00:48:12 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/09 11:52:42 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	execute_external_command(t_data *data, t_cmd_set *cmd_set)
 	pid_t	pid;
 	int		status;
 
-	printf("[DEBUG] Executing external command: %s\n", cmd_set->name);
+	// printf("[DEBUG] Executing external command: %s\n", cmd_set->name);
 	cmd_path = cmd_found(data, cmd_set);
 	if (!cmd_path)
 	{

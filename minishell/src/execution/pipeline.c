@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 18:21:00 by steven            #+#    #+#             */
-/*   Updated: 2026/03/09 12:20:35 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/09 17:44:17 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	create_pipeline(t_data *data)
 		return (1);
 	data->t_pipeline = NULL;
 	current_set = NULL;
-	// printf("[DEBUG] Starting pipeline creation\n");
 	if (!data->tokens)
 	{
 		printf("[DEBUG] No tokens found for pipeline creation\n");
@@ -78,6 +77,16 @@ int	create_pipeline(t_data *data)
 				return (fprintf(stderr,
 						"Syntax error: argument without command\n"), 1);
 			add_arg_to_cmd_set(current_set, token->value);
+		}
+		if (token->ast_type == LEX_HEREDOC)
+		{
+			if (!current_set || !token->next || token->next->ast_type != LEX_DELIMITER)
+				return (fprintf(stderr,
+						"Syntax error: heredoc\n"), 1);
+			if(current_set->heredoc_delim)
+				return (fprintf(stderr,
+						"Syntax error: multiple heredoc delimiters for one command\n"), 1);
+			current_set->heredoc_delim = ft_strdup(token->next->value);
 		}
 		token = token->next;
 	}

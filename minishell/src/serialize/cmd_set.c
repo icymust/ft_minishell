@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_set.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steven <steven@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:20:36 by steven            #+#    #+#             */
-/*   Updated: 2026/02/27 10:10:58 by steven           ###   ########.fr       */
+/*   Updated: 2026/03/09 21:43:20 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,16 @@ int add_arg_to_cmd_set(t_cmd_set *cmd_set, char *arg)
 
 void free_cmd_set(t_cmd_set *cmd_set)
 {
-	//TODO free infile, outfile, heredoc_delim if not NULL
     if (!cmd_set)
         return;
     free(cmd_set->name);
+	free(cmd_set->infile);
+	free(cmd_set->outfile);
+	free(cmd_set->heredoc_delim);
+	if (cmd_set->fd_in != -1)
+		close(cmd_set->fd_in);
+	if (cmd_set->fd_out != -1)
+		close(cmd_set->fd_out);
     if (cmd_set->args)
     {
         for (int i = 0; cmd_set->args[i]; i++)

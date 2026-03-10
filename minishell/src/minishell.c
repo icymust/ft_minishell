@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/05 12:26:12 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/10 20:19:33 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	minishell(char **env)
 		// create pipeline
 		if (create_pipeline(data) != 0)
 			exit_minishell(data, "Pipeline creation failed", 1);
-		if (execute_pipeline(data) != 0)
+		if (execute_pipeline(data) < 0)
 			exit_minishell(data, "Pipeline execution failed", 1);
 		free_pipeline(data);
 		free_tokens(data->tokens);

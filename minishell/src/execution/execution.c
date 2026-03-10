@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 19:50:22 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/09 11:52:42 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/10 19:22:13 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	execute_cmd_set(t_cmd_set *cmd_set, t_data *data)
 		data->exit_code = 1;
 		return (1);
 	}
-	data->exit_code = status;
-	return (0);
+	else{
+		data->exit_code = status;
+		return (status);
+	}
 }

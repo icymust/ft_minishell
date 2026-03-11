@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 10:21:23 by steven            #+#    #+#             */
-/*   Updated: 2026/03/09 12:31:51 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/10 23:43:09 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,5 @@ int lexer(t_data *data)
         //debug_print_enum(token->ast_type);
         token = token->next;
     }
-    printf("\n");
     return (0);
-    // for debugging, every token become a simple command
-
-    
 }

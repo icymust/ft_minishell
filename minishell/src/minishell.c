@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/10 20:19:33 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/11 03:08:01 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,65 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+int expand_token(t_data *data)
+{
+	t_token *tok = data->tokens;
+	char *newval = NULL;
+	char *code = NULL;
+	int i, j, k;
+
+	code = ft_itoa(data->exit_code);
+	if (!code)
+		return (1);
+	while (tok)
+	{
+		if (tok->ast_type == LEX_ARGS && tok->value)
+		{
+			int count = 0;
+			int len = ft_strlen(tok->value);
+			// Считаем количество $?
+			for (i = 0; tok->value[i]; ++i)
+				if (tok->value[i] == '$' && tok->value[i+1] == '?')
+					count++;
+			// Выделяем память ровно под результат
+			newval = malloc(len - (count * 2) + (count * ft_strlen(code)) + 1);
+			if (!newval)
+			{
+				free(code);
+				return (1);
+			}
+			i = 0;
+			j = 0;
+			while (tok->value[i])
+			{
+				if (tok->value[i] == '$' && tok->value[i+1] == '?')
+				{
+					k = 0;
+					while (code[k])
+						newval[j++] = code[k++];
+					i += 2;
+				}
+				else
+				{
+					newval[j++] = tok->value[i++];
+				}
+			}
+			newval[j] = '\0';
+			free(tok->value);
+			tok->value = newval;
+		}
+		tok = tok->next;
+	}
+	free(code);
+	return (0);
+}
+
 int	minishell(char **env)
 {
 	char	*cmd;
 	t_data	*data;
 	
-	print_banner();
+	// print_banner();
 	cmd = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -74,7 +127,8 @@ int	minishell(char **env)
 		cmd = NULL;
 		if (lexer(data) != 0)
 			exit_minishell(data, "Lexing failed", 1);
-		//count commands and pipes
+		if (expand_token(data))
+			exit_minishell(data, "Expand failed", 1);
 		// create pipeline
 		if (create_pipeline(data) != 0)
 			exit_minishell(data, "Pipeline creation failed", 1);

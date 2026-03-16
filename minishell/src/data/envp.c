@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steven <steven@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 13:01:22 by steven            #+#    #+#             */
-/*   Updated: 2026/02/27 18:37:44 by steven           ###   ########.fr       */
+/*   Updated: 2026/03/11 20:59:43 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	envp_index(t_data *data, char *var_name)
 {
-	int i;
+	int		i;
 	int		index;
 	char	*name_egal;
 	char	**envp;
-	
+
 	if (!data || !var_name)
 		return (-1);
 	envp = data->envp;
@@ -32,7 +32,7 @@ int	envp_index(t_data *data, char *var_name)
 		if (ft_strncmp(name_egal, envp[i], ft_strlen(name_egal)) == 0)
 		{
 			index = i;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -40,24 +40,24 @@ int	envp_index(t_data *data, char *var_name)
 	return (index);
 }
 
-char **copy_env(char **env)
+char	**copy_env(char **env)
 {
-    int i;
-    char **dest;
-    if (!env)
-        return (NULL);
-    i = 0;
-    while (env[i])
-        i++;
-    dest = malloc(sizeof(char *) * (i + 1));
-    if (!dest)
-        return (NULL);
-    i = 0;
-    while (env[i])
-    {
-        dest[i] = ft_strdup(env[i]);
-        i++;
-    }
-    dest[i] = NULL;
-    return (dest);
+	int i;
+	char **dest;
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env[i])
+		i++;
+	dest = malloc(sizeof(char *) * (i + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		dest[i] = ft_strdup(env[i]);
+		i++;
+	}
+	dest[i] = NULL;
+	return (dest);
 }

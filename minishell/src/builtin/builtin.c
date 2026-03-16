@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:21:47 by steven            #+#    #+#             */
-/*   Updated: 2026/03/02 21:04:32 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/12 01:22:43 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,9 @@ int execute_builtin(t_data *data, t_cmd_set *cmd_set)
         return (1);
     }
     if (ft_strncmp(cmd_set->name, "env", 3) == 0 && cmd_set->name[3] == '\0')
-    {
-        builtin_env(data, cmd_set);
-        return (0);
-    }
+        return (builtin_env(data, cmd_set));
     if (ft_strncmp(cmd_set->name, "export", 6) == 0 && cmd_set->name[6] == '\0')
-    {
-        builtin_export(data, cmd_set);
-        return (0);
-    }
+        return (builtin_export(data, cmd_set));
     if (ft_strncmp(cmd_set->name, "echo", 4) == 0 && cmd_set->name[4] == '\0')
     {
         builtin_echo(cmd_set);

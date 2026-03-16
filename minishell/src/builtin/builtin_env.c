@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steven <steven@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:55:18 by steven            #+#    #+#             */
-/*   Updated: 2026/02/27 18:37:37 by steven           ###   ########.fr       */
+/*   Updated: 2026/03/11 20:57:13 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
-
-int builtin_env(t_data *data, t_cmd_set *cmd_set)
+int	builtin_env(t_data *data, t_cmd_set *cmd_set)
 {
 	int	i;
 

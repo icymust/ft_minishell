@@ -6,17 +6,15 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/11 03:08:01 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/11 22:20:55 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			g_signal = 0;
-
 void	handle_sigint(int sig)
 {
-	g_signal = sig;
+	(void)sig;
 	exit_command(NULL);
 }
 
@@ -92,7 +90,7 @@ int	minishell(char **env)
 	char	*cmd;
 	t_data	*data;
 	
-	// print_banner();
+	print_banner();
 	cmd = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
@@ -132,6 +130,7 @@ int	minishell(char **env)
 		// create pipeline
 		if (create_pipeline(data) != 0)
 			exit_minishell(data, "Pipeline creation failed", 1);
+		// print_cmd_set(data->t_pipeline); //DELETE
 		if (execute_pipeline(data) < 0)
 			exit_minishell(data, "Pipeline execution failed", 1);
 		free_pipeline(data);

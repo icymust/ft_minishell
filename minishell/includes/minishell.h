@@ -107,6 +107,7 @@ int 					execute_cmd_set(t_cmd_set *cmd_set, t_data *data);
 
 void					builtin_echo(t_cmd_set *cmd_set);
 void					builtin_cd(t_cmd_set *cmd_set);
+int						builtin_unset(t_data *data, t_cmd_set *cmd_set);
 void					builtin_pwd(void);
 void					exit_minishell(t_data *data, const char *message, int exit_code);
 void					exit_command(char *message);
@@ -122,5 +123,7 @@ t_cmd_set				*new_cmd_in_pl(t_data *data, t_cmd_set *current_set, char *name);
 int						prepare_heredocs(t_cmd_set *pipeline);
 int						is_parent_builtin(t_cmd_set *cmd_set);
 int						run_parent_builtin(t_data *data, t_cmd_set *cmd_set);
+int						envp_len(char **envp);
+int						is_valid_export_name(char *arg, int name_len);
 
 #endif

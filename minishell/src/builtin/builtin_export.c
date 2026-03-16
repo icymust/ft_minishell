@@ -6,13 +6,13 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:55:21 by steven            #+#    #+#             */
-/*   Updated: 2026/03/12 02:06:28 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/17 01:38:19 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_valid_export_name(char *arg, int name_len)
+int	is_valid_export_name(char *arg, int name_len)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static int	is_valid_export_name(char *arg, int name_len)
 	return (1);
 }
 
-static int	envp_len(char **envp)
+int	envp_len(char **envp)
 {
 	int	i;
 

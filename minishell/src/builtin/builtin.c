@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:21:47 by steven            #+#    #+#             */
-/*   Updated: 2026/03/12 01:22:43 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/17 01:27:25 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int execute_builtin(t_data *data, t_cmd_set *cmd_set)
         builtin_pwd();
         return (0);
     }
+    if (ft_strncmp(cmd_set->name, "unset", 5) == 0 && cmd_set->name[5] == '\0')
+        return (builtin_unset(data, cmd_set));
     if (ft_strncmp(cmd_set->name, "exit", 4) == 0 && cmd_set->name[4] == '\0')
         exit_minishell(data, NULL, 0);
     return (1);

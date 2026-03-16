@@ -24,7 +24,11 @@ SRCS = \
 	src/utils/utils.c \
 	src/utils/exit.c \
 	src/minishell.c \
-	src/debug/debug_prints.c
+	src/debug/debug_prints.c \
+	src/serialize/pipeline_build.c \
+	src/execution/pipeline_exec.c \
+	src/execution/pipeline_heredoc.c \
+	src/execution/pipeline_parent_builtin.c
 
 HEADERS = includes/minishell.h
 

@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 14:21:47 by steven            #+#    #+#             */
-/*   Updated: 2026/03/17 01:27:25 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/17 19:35:14 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ int execute_builtin(t_data *data, t_cmd_set *cmd_set)
         return (0);
     }
     if (ft_strncmp(cmd_set->name, "cd", 2) == 0 && cmd_set->name[2] == '\0')
-    {
-        builtin_cd(cmd_set);
-        return (0);
-    }
+        return (builtin_cd(data, cmd_set));
     if (ft_strncmp(cmd_set->name, "pwd", 3) == 0 && cmd_set->name[3] == '\0')
     {
         builtin_pwd();

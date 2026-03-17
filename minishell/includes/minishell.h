@@ -106,7 +106,7 @@ int 					builtin_export(t_data *data, t_cmd_set *cmd_set);
 int 					execute_cmd_set(t_cmd_set *cmd_set, t_data *data);
 
 void					builtin_echo(t_cmd_set *cmd_set);
-void					builtin_cd(t_cmd_set *cmd_set);
+int						builtin_cd(t_data *data, t_cmd_set *cmd_set);
 int						builtin_unset(t_data *data, t_cmd_set *cmd_set);
 void					builtin_pwd(void);
 void					exit_minishell(t_data *data, const char *message, int exit_code);

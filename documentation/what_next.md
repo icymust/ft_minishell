@@ -12,25 +12,27 @@ Current state
 - [done] Tokenizer and lexer exist.
 - [done] Parser builds a command pipeline.
 - [done] Basic execution works.
-- [partial] Pipes, redirections, and heredoc exist, but still need full mandatory verification.
+- [partial] Pipes, redirections, and heredoc work in core mandatory cases, but fd/signal/error-path verification is still open.
+- [done] Stateful builtins run in the parent when there is no pipeline.
 - [done] $? expansion is implemented.
 - [todo] Generic $VAR expansion is still missing.
-- [todo] Quote-aware normalization is still incomplete.
-- [partial] Builtins exist, but export is still incomplete and parent/child behavior still needs review.
+- [todo] Quote-aware normalization is still incomplete; quotes still reach external commands.
+- [done] Mandatory builtins are in place for the current project scope.
 - [done] Bonus part is deferred for now.
 
 What still remains for mandatory
 
-- [todo] Make stateful builtins run in the parent process when there is no pipeline: cd, export, unset, exit.
-- [todo] Implement export on top of data->envp.
+- [done] Make stateful builtins run in the parent process when there is no pipeline: cd, export, unset, exit.
+- [done] Implement export on top of data->envp.
 - [done] Implement unset on top of data->envp.
 - [todo] Implement generic environment variable expansion: $VAR.
 - [partial] Keep $? expansion, but integrate it into the final quote-aware expansion step.
 - [todo] Respect quote rules fully:
    single quotes block expansion, double quotes allow expansion, and shell quotes must not reach execve as syntax characters.
+- [done] Fix builtin failure statuses where mandatory commands still report success, notably cd.
 - [partial] Recheck signal behavior against bash in interactive mode and during child execution.
 - [partial] Re-test redirection and heredoc error paths.
-- [todo] Re-run the mandatory checklist after expansion and builtin fixes.
+- [partial] Re-run the mandatory checklist after expansion and builtin fixes.
 - [todo] Re-run memory checks and file descriptor cleanup checks.
 
 High-level flow
@@ -74,7 +76,7 @@ Rules we follow
 Ordered plan
 
 1. Stabilize pipeline behavior
-- [partial] Re-test simple pipes and redirections.
+- [done] Re-test simple pipes and redirections.
 - [partial] Confirm no debug output pollutes command stdout.
 - [partial] Confirm each stage closes the correct file descriptors.
 
@@ -83,7 +85,7 @@ Ordered plan
 - [done] Make $? reflect the last executed pipeline correctly.
 - [partial] Review child exits in pipeline execution.
 
-Status: mostly in place, but should be revalidated after builtin parent/child fixes.
+Status: core pipe/redirection behavior passed smoke tests on March 17, 2026; fd and signal cleanup still need work.
 
 3. Finalize quote handling strategy
 - [partial] Keep raw tokens if needed for parsing clarity.
@@ -102,28 +104,28 @@ Current gap: quotes are still preserved in tokens, and quote removal/expansion r
 Current gap: only $? is implemented right now.
 
 5. Review and finish redirections
-- [partial] Input redirection: <
-- [partial] Output redirection: >
-- [partial] Append redirection: >>
+- [done] Input redirection: <
+- [done] Output redirection: >
+- [done] Append redirection: >>
 - [partial] Error handling for open/dup2 failures.
 
 6. Implement heredoc
 - [done] Parse << with delimiter.
 - [done] Read until delimiter.
 - [done] Feed heredoc content to the command stdin.
-- [partial] Clean temporary resources correctly.
+- [done] Clean heredoc resources correctly without temporary files.
 
 7. Review builtins behavior
 - [done] echo -n
-- [partial] cd
+- [done] cd
 - [done] pwd
-- [todo] export
+- [done] export
 - [done] unset
 - [done] env
-- [partial] exit
-- [todo] Decide which builtins must run in parent when not inside a pipeline.
+- [done] exit
+- [done] Decide which builtins must run in parent when not inside a pipeline.
 
-Current gap: export is still TODO, and stateful builtin parent/child behavior should be revalidated after the latest fixes.
+Current gap: builtin set is stable for mandatory scope; remaining work is now mostly expansion, quote handling, signals, and cleanup.
 
 8. Fix signal behavior
 - [partial] Ctrl-C in interactive mode shows a new prompt.
@@ -135,20 +137,20 @@ Current gap: export is still TODO, and stateful builtin parent/child behavior sh
 - [done] Free tokens.
 - [done] Free pipeline structures.
 - [partial] Close all used file descriptors.
-- [done] Remove heredoc temporary files.
+- [done] Heredoc uses pipe fds instead of temporary files.
 - [todo] Recheck for leaks and double frees.
 
 10. Mandatory test checklist
-- [partial] Simple external command.
-- [partial] Builtin command.
-- [partial] Single pipe.
-- [todo] Multiple pipes.
-- [partial] Pipe + redirection.
-- [partial] Invalid command in pipeline.
-- [partial] Missing file in redirection.
-- [todo] Quotes with spaces.
+- [done] Simple external command.
+- [done] Builtin command.
+- [done] Single pipe.
+- [done] Multiple pipes.
+- [done] Pipe + redirection.
+- [done] Invalid command in pipeline.
+- [done] Missing file in redirection.
+- [partial] Quotes with spaces.
 - [partial] $VAR and $?.
-- [partial] Heredoc.
+- [done] Heredoc.
 - [todo] Signals.
 
 After mandatory is stable

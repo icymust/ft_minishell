@@ -15,8 +15,8 @@ Current state
 - [partial] Pipes, redirections, and heredoc work in core mandatory cases, but fd/signal/error-path verification is still open.
 - [done] Stateful builtins run in the parent when there is no pipeline.
 - [done] $? expansion is implemented.
-- [todo] Generic $VAR expansion is still missing.
-- [todo] Quote-aware normalization is still incomplete; quotes still reach external commands.
+- [done] Generic $VAR expansion is implemented for commands, arguments, and redirection paths.
+- [done] Quote-aware normalization is implemented for mandatory cases; shell quotes no longer reach execve as syntax.
 - [done] Mandatory builtins are in place for the current project scope.
 - [done] Bonus part is deferred for now.
 
@@ -25,9 +25,9 @@ What still remains for mandatory
 - [done] Make stateful builtins run in the parent process when there is no pipeline: cd, export, unset, exit.
 - [done] Implement export on top of data->envp.
 - [done] Implement unset on top of data->envp.
-- [todo] Implement generic environment variable expansion: $VAR.
-- [partial] Keep $? expansion, but integrate it into the final quote-aware expansion step.
-- [todo] Respect quote rules fully:
+- [done] Implement generic environment variable expansion: $VAR.
+- [done] Keep $? expansion, but integrate it into the final quote-aware expansion step.
+- [done] Respect quote rules fully for the mandatory parser/executor path:
    single quotes block expansion, double quotes allow expansion, and shell quotes must not reach execve as syntax characters.
 - [done] Fix builtin failure statuses where mandatory commands still report success, notably cd.
 - [partial] Recheck signal behavior against bash in interactive mode and during child execution.
@@ -85,23 +85,23 @@ Ordered plan
 - [done] Make $? reflect the last executed pipeline correctly.
 - [partial] Review child exits in pipeline execution.
 
-Status: core pipe/redirection behavior passed smoke tests on March 17, 2026; fd and signal cleanup still need work.
+Status: core pipe/redirection behavior and mandatory expansion smoke tests passed on March 19, 2026; fd and signal cleanup still need work.
 
 3. Finalize quote handling strategy
 - [partial] Keep raw tokens if needed for parsing clarity.
-- [todo] Define where quote semantics are resolved.
-- [todo] Build final argv without shell syntax quotes while preserving intended spaces.
-- [todo] Respect single quotes and double quotes according to the subject.
+- [done] Define where quote semantics are resolved.
+- [done] Build final argv without shell syntax quotes while preserving intended spaces.
+- [done] Respect single quotes and double quotes according to the subject.
 
-Current gap: quotes are still preserved in tokens, and quote removal/expansion rules are not finalized globally.
+Current gap: base quote handling is in place for mandatory execution; remaining work is signals, fd cleanup, and final error-path rechecks.
 
 4. Implement variable expansion
-- [todo] Expand $VAR.
+- [done] Expand $VAR.
 - [done] Expand $?.
-- [todo] Do not expand inside single quotes.
-- [todo] Expand inside double quotes.
+- [done] Do not expand inside single quotes.
+- [done] Expand inside double quotes.
 
-Current gap: only $? is implemented right now.
+Current gap: mandatory variable expansion is in place; remaining validation is around signals and redirection/heredoc edge cases.
 
 5. Review and finish redirections
 - [done] Input redirection: <
@@ -125,7 +125,7 @@ Current gap: only $? is implemented right now.
 - [done] exit
 - [done] Decide which builtins must run in parent when not inside a pipeline.
 
-Current gap: builtin set is stable for mandatory scope; remaining work is now mostly expansion, quote handling, signals, and cleanup.
+Current gap: builtin set is stable for mandatory scope; remaining work is now mostly signals, fd cleanup, and final validation.
 
 8. Fix signal behavior
 - [partial] Ctrl-C in interactive mode shows a new prompt.
@@ -148,8 +148,8 @@ Current gap: builtin set is stable for mandatory scope; remaining work is now mo
 - [done] Pipe + redirection.
 - [done] Invalid command in pipeline.
 - [done] Missing file in redirection.
-- [partial] Quotes with spaces.
-- [partial] $VAR and $?.
+- [done] Quotes with spaces.
+- [done] $VAR and $?.
 - [done] Heredoc.
 - [todo] Signals.
 

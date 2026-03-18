@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/11 22:20:55 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/18 15:05:32 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,22 @@ void	setup_signals(void)
 
 int expand_token(t_data *data)
 {
-	t_token *tok = data->tokens;
-	char *newval = NULL;
-	char *code = NULL;
-	int i, j, k;
+	t_token	*tok;
+	char	*newval;
+	char	*code;
+	char	*var_name;
+	char	*var_value;
+	int		i;
+	int		j;
+	int		k;
+	int		len;
+	int		var_start;
+	int		var_len;
 
+	tok = data->tokens;
+	newval = NULL;
+	var_name = NULL;
+	var_value = NULL;
 	code = ft_itoa(data->exit_code);
 	if (!code)
 		return (1);
@@ -46,14 +57,44 @@ int expand_token(t_data *data)
 	{
 		if (tok->ast_type == LEX_ARGS && tok->value)
 		{
-			int count = 0;
-			int len = ft_strlen(tok->value);
-			// Считаем количество $?
-			for (i = 0; tok->value[i]; ++i)
-				if (tok->value[i] == '$' && tok->value[i+1] == '?')
-					count++;
-			// Выделяем память ровно под результат
-			newval = malloc(len - (count * 2) + (count * ft_strlen(code)) + 1);
+			len = 0;
+			i = 0;
+			while (tok->value[i])
+			{
+				if (tok->value[i] == '$' && tok->value[i + 1] == '?')
+				{
+					len += ft_strlen(code);
+					i += 2;
+				}
+				else if (tok->value[i] == '$'
+					&& (ft_isalpha(tok->value[i + 1])
+						|| tok->value[i + 1] == '_'))
+				{
+					var_start = i + 1;
+					i = var_start;
+					while (tok->value[i] && (ft_isalnum(tok->value[i])
+							|| tok->value[i] == '_'))
+						i++;
+					var_len = i - var_start;
+					var_name = ft_strndup(tok->value + var_start, var_len);
+					if (!var_name)
+					{
+						free(code);
+						return (1);
+					}
+					var_value = envp_value(data, var_name);
+					if (var_value)
+						len += ft_strlen(var_value);
+					free(var_name);
+					var_name = NULL;
+				}
+				else
+				{
+					len++;
+					i++;
+				}
+			}
+			newval = malloc(len + 1);
 			if (!newval)
 			{
 				free(code);
@@ -69,6 +110,33 @@ int expand_token(t_data *data)
 					while (code[k])
 						newval[j++] = code[k++];
 					i += 2;
+				}
+				else if (tok->value[i] == '$'
+					&& (ft_isalpha(tok->value[i + 1])
+						|| tok->value[i + 1] == '_'))
+				{
+					var_start = i + 1;
+					i = var_start;
+					while (tok->value[i] && (ft_isalnum(tok->value[i])
+							|| tok->value[i] == '_'))
+						i++;
+					var_len = i - var_start;
+					var_name = ft_strndup(tok->value + var_start, var_len);
+					if (!var_name)
+					{
+						free(newval);
+						free(code);
+						return (1);
+					}
+					var_value = envp_value(data, var_name);
+					free(var_name);
+					var_name = NULL;
+					if (var_value)
+					{
+						k = 0;
+						while (var_value[k])
+							newval[j++] = var_value[k++];
+					}
 				}
 				else
 				{

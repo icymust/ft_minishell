@@ -15,10 +15,8 @@
 int	builtin_cd(t_data *data, t_cmd_set *cmd_set)
 {
 	char	*path;
-	int		index;
 
 	path = NULL;
-	index = 0;
 	if (!cmd_set)
 		return (1);
 	if (cmd_set->args && cmd_set->args[1])
@@ -29,22 +27,8 @@ int	builtin_cd(t_data *data, t_cmd_set *cmd_set)
 	if (cmd_set->args && cmd_set->args[0])
 		path = cmd_set->args[0];
 	else
-	{
-		index = envp_index(data, "HOME");
-		if (index == -1)
-		{
-			printf("cd: HOME not set\n");
-			return (1);
-		}
-		path = ft_strchr(data->envp[index], '=');
-		if (!path || path[1] == '\0')
-		{
-			printf("cd: HOME not set\n");
-			return (1);
-		}
-		path++;
-	}
-	if (path == NULL)
+		path = envp_value(data, "HOME");
+	if (!path || path[0] == '\0')
 	{
 		printf("cd: HOME not set\n");
 		return (1);

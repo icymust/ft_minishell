@@ -6,13 +6,25 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 13:01:22 by steven            #+#    #+#             */
-/*   Updated: 2026/03/11 20:59:43 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/18 14:53:37 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	envp_index(t_data *data, char *var_name)
+char *envp_value(t_data *data, const char *var_name)
+{
+	int index;
+
+	if (!data || !var_name)
+		return (NULL);
+	index = envp_index(data, var_name);
+	if (index == -1)
+		return (NULL);
+	return (data->envp[index] + ft_strlen(var_name) + 1);
+}
+
+int	envp_index(t_data *data, const char *var_name)
 {
 	int		i;
 	int		index;

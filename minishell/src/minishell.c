@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/18 15:05:32 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/18 17:01:55 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int expand_token(t_data *data)
 		return (1);
 	while (tok)
 	{
-		if (tok->ast_type == LEX_ARGS && tok->value)
+		if ((tok->ast_type == LEX_ARGS || tok->ast_type == LEX_PATH) && tok->value)
 		{
 			len = 0;
 			i = 0;

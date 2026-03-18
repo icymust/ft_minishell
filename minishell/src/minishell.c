@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/18 17:01:55 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/18 23:50:54 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
-int expand_token(t_data *data)
+int	expand_token(t_data *data)
 {
 	t_token	*tok;
 	char	*newval;
@@ -45,6 +45,8 @@ int expand_token(t_data *data)
 	int		len;
 	int		var_start;
 	int		var_len;
+	int		in_single;
+	int		in_double;
 
 	tok = data->tokens;
 	newval = NULL;
@@ -55,20 +57,34 @@ int expand_token(t_data *data)
 		return (1);
 	while (tok)
 	{
-		if ((tok->ast_type == LEX_ARGS || tok->ast_type == LEX_PATH) && tok->value)
+		if ((tok->ast_type == LEX_ARGS || tok->ast_type == LEX_PATH)
+			&& tok->value)
 		{
 			len = 0;
 			i = 0;
+			in_single = 0;
+			in_double = 0;
 			while (tok->value[i])
 			{
-				if (tok->value[i] == '$' && tok->value[i + 1] == '?')
+				if (tok->value[i] == '\'' && !in_double)
+				{
+					in_single = !in_single;
+					i++;
+				}
+				else if (tok->value[i] == '\"' && !in_single)
+				{
+					in_double = !in_double;
+					i++;
+				}
+				else if (!in_single && tok->value[i] == '$' && tok->value[i
+					+ 1] == '?')
 				{
 					len += ft_strlen(code);
 					i += 2;
 				}
-				else if (tok->value[i] == '$'
-					&& (ft_isalpha(tok->value[i + 1])
-						|| tok->value[i + 1] == '_'))
+				else if (!in_single && tok->value[i] == '$'
+					&& (ft_isalpha(tok->value[i + 1]) || tok->value[i
+						+ 1] == '_'))
 				{
 					var_start = i + 1;
 					i = var_start;
@@ -102,18 +118,31 @@ int expand_token(t_data *data)
 			}
 			i = 0;
 			j = 0;
+			in_single = 0;
+			in_double = 0;
 			while (tok->value[i])
 			{
-				if (tok->value[i] == '$' && tok->value[i+1] == '?')
+				if (tok->value[i] == '\'' && !in_double)
+				{
+					in_single = !in_single;
+					i++;
+				}
+				else if (tok->value[i] == '\"' && !in_single)
+				{
+					in_double = !in_double;
+					i++;
+				}
+				else if (!in_single && tok->value[i] == '$' && tok->value[i
+					+ 1] == '?')
 				{
 					k = 0;
 					while (code[k])
 						newval[j++] = code[k++];
 					i += 2;
 				}
-				else if (tok->value[i] == '$'
-					&& (ft_isalpha(tok->value[i + 1])
-						|| tok->value[i + 1] == '_'))
+				else if (!in_single && tok->value[i] == '$'
+					&& (ft_isalpha(tok->value[i + 1]) || tok->value[i
+						+ 1] == '_'))
 				{
 					var_start = i + 1;
 					i = var_start;
@@ -157,7 +186,7 @@ int	minishell(char **env)
 {
 	char	*cmd;
 	t_data	*data;
-	
+
 	print_banner();
 	cmd = NULL;
 	data = malloc(sizeof(t_data));
@@ -204,10 +233,9 @@ int	minishell(char **env)
 		free_pipeline(data);
 		free_tokens(data->tokens);
 		data->tokens = NULL;
-		//fork
-		//execute_command(tokens, data->pipe_count, data->cmd_count);
+		// fork
+		// execute_command(tokens, data->pipe_count, data->cmd_count);
 	}
-
 	free_data(data);
 	return (0);
 }

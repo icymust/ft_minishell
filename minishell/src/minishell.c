@@ -6,15 +6,18 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/19 00:44:23 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/19 01:47:15 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static volatile sig_atomic_t	signal_status;
+
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	signal_status = sig;
 	exit_command(NULL);
 }
 
@@ -201,6 +204,10 @@ int	minishell(char **env)
 	while (1)
 	{
 		cmd = readline(PROMPT);
+		if (signal_status){
+			data->exit_code = 128 + signal_status;
+			signal_status = 0;
+		}
 		if (!cmd)
 			exit_minishell(data, "EOF", 0);
 		if (cmd[0] != '\0')

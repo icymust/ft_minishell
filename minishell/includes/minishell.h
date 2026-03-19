@@ -128,5 +128,6 @@ int						is_valid_export_name(char *arg, int name_len);
 char 					*envp_value(t_data *data, const char *var_name);
 void					setup_signals(void);
 void					setup_wait_signals(void);
+int						consume_signal_status(void);
 
 #endif

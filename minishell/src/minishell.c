@@ -6,45 +6,11 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/19 01:47:15 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/19 15:23:49 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static volatile sig_atomic_t	signal_status;
-
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	signal_status = sig;
-	exit_command(NULL);
-}
-
-void	setup_signals(void)
-{
-	struct sigaction	sa;
-
-	// ctrl c
-	sa.sa_handler = handle_sigint;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa, NULL);
-	/*ctrl-\*/
-	sa.sa_handler = SIG_IGN; // ignore sig
-	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	setup_wait_signals(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_handler = SIG_IGN;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &sa, NULL);
-}
 
 int	expand_token(t_data *data)
 {
@@ -200,10 +166,12 @@ int	minishell(char **env)
 {
 	char	*cmd;
 	t_data	*data;
+	int 	status;
 
 	print_banner();
 	cmd = NULL;
 	data = malloc(sizeof(t_data));
+	status = 0;
 	if (!data)
 		return (1);
 	if (init_data(data, env))
@@ -215,10 +183,9 @@ int	minishell(char **env)
 	while (1)
 	{
 		cmd = readline(PROMPT);
-		if (signal_status){
-			data->exit_code = 128 + signal_status;
-			signal_status = 0;
-		}
+		status = consume_signal_status();
+		if (status)
+			data->exit_code = status;
 		if (!cmd)
 			exit_minishell(data, "EOF", 0);
 		if (cmd[0] != '\0')

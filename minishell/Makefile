@@ -28,7 +28,8 @@ SRCS = \
 	src/serialize/pipeline_build.c \
 	src/execution/pipeline_exec.c \
 	src/execution/pipeline_heredoc.c \
-	src/execution/pipeline_parent_builtin.c
+	src/execution/pipeline_parent_builtin.c \
+	src/core/signals.c
 
 HEADERS = includes/minishell.h
 

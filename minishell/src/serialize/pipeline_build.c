@@ -37,10 +37,7 @@ int	create_pipeline(t_data *data)
 	data->t_pipeline = NULL;
 	current_set = NULL;
 	if (!data->tokens)
-	{
-		printf("[DEBUG] No tokens found for pipeline creation\n");
 		return (1);
-	}
 	token = data->tokens;
 	while (token)
 	{

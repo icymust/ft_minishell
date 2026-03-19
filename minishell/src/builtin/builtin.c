@@ -36,10 +36,7 @@ int is_builtin(t_cmd_set *cmd_set)
 int execute_builtin(t_data *data, t_cmd_set *cmd_set)
 {
     if (!cmd_set || !data || !cmd_set->name)
-    {
-        printf("[ERROR] Invalid command set or data for executing builtin\n");
         return (1);
-    }
     if (ft_strncmp(cmd_set->name, "env", 3) == 0 && cmd_set->name[3] == '\0')
         return (builtin_env(data, cmd_set));
     if (ft_strncmp(cmd_set->name, "export", 6) == 0 && cmd_set->name[6] == '\0')

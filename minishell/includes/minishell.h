@@ -77,6 +77,14 @@ typedef struct s_data
 	t_cmd_set			*t_pipeline;
 }						t_data;
 
+typedef struct s_expand_state
+{
+	int					quote[2];
+	int					i;
+	int					j;
+	char				*newval;
+}						t_expand_state;
+
 int						minishell(char **env);
 void 					print_banner(void);
 int						tokenizer(const char *cmd, t_token **tokens);
@@ -126,6 +134,14 @@ int						run_parent_builtin(t_data *data, t_cmd_set *cmd_set);
 int						envp_len(char **envp);
 int						is_valid_export_name(char *arg, int name_len);
 char 					*envp_value(t_data *data, const char *var_name);
+int						expand_token(t_data *data);
+int						update_quote_state(char c, int *quote);
+char					*expand_var_name(char *value, int *i);
+int						var_value_len(t_data *data, char *value, int *i);
+void					append_exit_code(char *newval, int *j, char *code);
+int						append_var_value(t_data *data, char *value, t_expand_state *st);
+int						expanded_value_len(t_data *data, t_token *tok, char *code);
+char					*build_expanded_value(t_data *data, t_token *tok, char *code);
 void					setup_signals(void);
 void					setup_wait_signals(void);
 int						consume_signal_status(void);

@@ -29,7 +29,11 @@ SRCS = \
 	src/execution/pipeline_exec.c \
 	src/execution/pipeline_heredoc.c \
 	src/execution/pipeline_parent_builtin.c \
-	src/core/signals.c
+	src/core/signals.c \
+	src/expand/expand.c \
+	src/expand/expand_len.c \
+	src/expand/expand_build.c \
+	src/expand/expand_utils.c
 
 HEADERS = includes/minishell.h
 

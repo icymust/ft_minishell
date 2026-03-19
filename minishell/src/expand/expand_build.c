@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/20 00:00:00 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/20 02:08:13 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/20 02:55:55 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ char	*build_expanded_value(t_data *data, t_token *tok, char *code)
 	while (tok->value[st.i])
 	{
 		if (next_build_chunk(data, tok->value, code, &st) < 0)
-			return (free(st.newval), NULL);
+		{
+			free(st.newval);
+			return (NULL);
+		}
 	}
 	st.newval[st.j] = '\0';
 	return (st.newval);

@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 19:50:22 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/10 19:22:13 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/19 13:48:35 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	execute_external_command(t_data *data, t_cmd_set *cmd_set)
 	}
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (execve(cmd_path, argv, data->envp) < 0)
 		{
 			perror("Execution failed");

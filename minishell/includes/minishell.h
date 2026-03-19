@@ -126,5 +126,7 @@ int						run_parent_builtin(t_data *data, t_cmd_set *cmd_set);
 int						envp_len(char **envp);
 int						is_valid_export_name(char *arg, int name_len);
 char 					*envp_value(t_data *data, const char *var_name);
+void					setup_signals(void);
+void					setup_wait_signals(void);
 
 #endif

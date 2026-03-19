@@ -35,6 +35,17 @@ void	setup_signals(void)
 	sigaction(SIGQUIT, &sa, NULL);
 }
 
+void	setup_wait_signals(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = SIG_IGN;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
 int	expand_token(t_data *data)
 {
 	t_token	*tok;

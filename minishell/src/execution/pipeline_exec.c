@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:54:48 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/16 20:56:54 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/19 14:19:17 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ int	execute_pipeline(t_data *data)
 	prev_fd = -1;
 	step = data->t_pipeline;
 	if (!step)
-		printf("[DEBUG] No commands to execute in pipeline\n");
+		return (0);
 	if (prepare_heredocs(data->t_pipeline) != 0)
 		return (-1);
+	if (step->next == NULL && is_parent_builtin(step))
+		return (run_parent_builtin(data, step));
+	setup_wait_signals();
 	while (step)
 	{
-		// printf("[DEBUG PIPELINE] Command: %s\n", step->name);
-		// print_cmd_set(step);
-		if (prev_fd == -1 && step->next == NULL && is_parent_builtin(step))
-			return (run_parent_builtin(data, step));
 		// Создаём пайп, если есть следующая команда
 		if (step->next)
 		{
@@ -99,6 +98,8 @@ int	execute_pipeline(t_data *data)
 				dup2(fd_out, STDOUT_FILENO);
 				close(fd_out);
 			}
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			status = execute_cmd_set(step, data);
 			exit(status);
 		}
@@ -116,6 +117,7 @@ int	execute_pipeline(t_data *data)
 			close(fd[1]);
 		step = step->next;
 	}
+
 	// Ждём завершения всех дочерних процессов
 	while (1)
 	{
@@ -125,6 +127,7 @@ int	execute_pipeline(t_data *data)
 		if (waited_pid == last_pid)
 			last_status = status;
 	}
+	setup_signals();
 	if (WIFEXITED(last_status))
 		data->exit_code = WEXITSTATUS(last_status);
 	else if (WIFSIGNALED(last_status))

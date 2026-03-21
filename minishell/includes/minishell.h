@@ -120,6 +120,8 @@ int						is_builtin(t_cmd_set *cmd_set);
 int 					execute_builtin(t_data *data, t_cmd_set *cmd_set);
 
 char					*cmd_found(t_data *data, t_cmd_set *set);
+int						prepare_external_exec(t_data *data, t_cmd_set *cmd_set,
+							char **cmd_path, char ***argv);
 int 					builtin_env(t_data *data, t_cmd_set *cmd_set);
 int 					builtin_export(t_data *data, t_cmd_set *cmd_set);
 int 					execute_cmd_set(t_cmd_set *cmd_set, t_data *data);

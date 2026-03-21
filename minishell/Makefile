@@ -14,6 +14,7 @@ SRCS = \
 	src/data/data.c \
 	src/data/envp.c \
 	src/execution/execution.c \
+	src/execution/execution_external_utils.c \
 	src/execution/exec_utils.c \
 	src/execution/pipeline_free.c \
 	src/serialize/tokenizer.c \

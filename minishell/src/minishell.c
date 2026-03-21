@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/19 16:53:21 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/21 23:32:31 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	minishell(char **env)
 	t_data	*data;
 	int		status;
 
-	print_banner();
 	data = init_shell_data(env);
 	if (!data)
 		return (1);

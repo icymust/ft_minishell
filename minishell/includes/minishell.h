@@ -85,6 +85,17 @@ typedef struct s_expand_state
 	char				*newval;
 }						t_expand_state;
 
+typedef struct s_exec_state
+{
+	int		fd[2];
+	int		prev_fd;
+	int		status;
+	int		last_status;
+	pid_t	pid;
+	pid_t	last_pid;
+	pid_t	waited_pid;
+}	t_exec_state;
+
 int						minishell(char **env);
 void 					print_banner(void);
 int						tokenizer(const char *cmd, t_token **tokens);
@@ -131,6 +142,12 @@ t_cmd_set				*new_cmd_in_pl(t_data *data, t_cmd_set *current_set, char *name);
 int						prepare_heredocs(t_cmd_set *pipeline);
 int						is_parent_builtin(t_cmd_set *cmd_set);
 int						run_parent_builtin(t_data *data, t_cmd_set *cmd_set);
+int						save_parent_stdio(int *saved_stdio);
+void					restore_parent_stdio(int *saved_stdio);
+int						prepare_parent_input(t_data *data, t_cmd_set *cmd_set,
+							int *saved_stdio);
+int						prepare_parent_output(t_data *data, t_cmd_set *cmd_set,
+							int *saved_stdio);
 int						envp_len(char **envp);
 int						is_valid_export_name(char *arg, int name_len);
 char 					*envp_value(t_data *data, const char *var_name);
@@ -145,5 +162,7 @@ char					*build_expanded_value(t_data *data, t_token *tok, char *code);
 void					setup_signals(void);
 void					setup_wait_signals(void);
 int						consume_signal_status(void);
+void	run_pipeline_child(t_exec_state *state, t_cmd_set *step,
+		t_data *data);
 
 #endif

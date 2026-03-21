@@ -15,7 +15,7 @@ SRCS = \
 	src/data/envp.c \
 	src/execution/execution.c \
 	src/execution/exec_utils.c \
-	src/execution/pipeline.c \
+	src/execution/pipeline_free.c \
 	src/serialize/tokenizer.c \
 	src/serialize/lexer.c \
 	src/serialize/cmd_set.c \
@@ -29,11 +29,14 @@ SRCS = \
 	src/execution/pipeline_exec.c \
 	src/execution/pipeline_heredoc.c \
 	src/execution/pipeline_parent_builtin.c \
+	src/execution/pipeline_parent_utils.c \
+	src/execution/pipeline_parent_redir.c \
 	src/core/signals.c \
 	src/expand/expand.c \
 	src/expand/expand_len.c \
 	src/expand/expand_build.c \
-	src/expand/expand_utils.c
+	src/expand/expand_utils.c \
+	src/execution/pipeline_child.c
 
 HEADERS = includes/minishell.h
 

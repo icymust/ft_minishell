@@ -6,6 +6,7 @@ DEBUG_ON = -DDEBUG_MODE=1 -g -fsanitize=address
 SRCS = \
 	src/builtin/builtin.c \
 	src/builtin/builtin_export.c \
+	src/builtin/builtin_export_utils.c \
 	src/builtin/builtin_unset.c \
 	src/builtin/builtin_env.c \
 	src/builtin/builtin_echo.c  \

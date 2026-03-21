@@ -6,11 +6,11 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 15:19:25 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/19 15:27:06 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/21 21:42:19 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static volatile sig_atomic_t	signal_status;
 
@@ -25,13 +25,11 @@ void	setup_signals(void)
 {
 	struct sigaction	sa;
 
-	// ctrl c
 	sa.sa_handler = handle_sigint;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
-	/*ctrl-\*/
-	sa.sa_handler = SIG_IGN; // ignore sig
+	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
 }
 

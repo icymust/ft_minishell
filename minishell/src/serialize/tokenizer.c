@@ -12,7 +12,26 @@
 
 #include "minishell.h"
 
-int	add_token(const char *start, const char *end, t_token **tokens,
+static t_token	*new_token_node(const char *start, const char *end,
+		t_lexin_ast ast_type)
+{
+	t_token	*new_token;
+
+	new_token = malloc(sizeof(t_token));
+	if (!new_token)
+		return (NULL);
+	new_token->value = ft_strndup(start, end - start);
+	if (!new_token->value)
+	{
+		free(new_token);
+		return (NULL);
+	}
+	new_token->next = NULL;
+	new_token->ast_type = ast_type;
+	return (new_token);
+}
+
+static int	add_token(const char *start, const char *end, t_token **tokens,
 		t_lexin_ast ast_type)
 {
 	t_token	*new_token;
@@ -20,22 +39,14 @@ int	add_token(const char *start, const char *end, t_token **tokens,
 
 	if (!tokens || !start || !end || end < start)
 		return (0);
-	new_token = malloc(sizeof(t_token));
+	new_token = new_token_node(start, end, ast_type);
 	if (!new_token)
 		return (0);
-	new_token->value = ft_strndup(start, end - start);
-	if (!new_token->value)
-	{
-		free(new_token);
-		return (0);
-	}
-	new_token->next = NULL;
-	new_token->ast_type = ast_type;
-	if (!*tokens)
+	temp = *tokens;
+	if (!temp)
 		*tokens = new_token;
 	else
 	{
-		temp = *tokens;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_token;
@@ -43,26 +54,50 @@ int	add_token(const char *start, const char *end, t_token **tokens,
 	return (1);
 }
 
-void	free_tokens(t_token *tokens)
+static int	handle_operator_token(const char **cmd_line, t_token **tokens)
 {
-	t_token	*temp;
+	const char	*start;
 
-	while (tokens)
-	{
-		temp = tokens;
-		tokens = tokens->next;
-		if (temp->value != NULL)
-			free(temp->value);
-		free(temp);
-	}
-	tokens = NULL;
+	start = *cmd_line;
+	if ((*cmd_line)[1] && (*cmd_line)[1] == **cmd_line)
+		*cmd_line += 2;
+	else
+		(*cmd_line)++;
+	if (!add_token(start, *cmd_line, tokens, TOKEN_OPERATOR))
+		return (1);
+	return (0);
 }
 
-int	tokenizer(const char *cmd_line, t_token **tokens)
+static int	handle_word_token(const char **cmd_line, t_token **tokens)
 {
 	const char	*start;
 	char		quote;
 
+	start = *cmd_line;
+	while (**cmd_line && !is_space(**cmd_line)
+		&& !is_operator_char(**cmd_line))
+	{
+		if (**cmd_line == '\'' || **cmd_line == '\"')
+		{
+			quote = *(*cmd_line)++;
+			while (**cmd_line && **cmd_line != quote)
+				(*cmd_line)++;
+			if (**cmd_line != quote)
+				return (0);
+			if (!**cmd_line)
+				return (1);
+			(*cmd_line)++;
+		}
+		else
+			(*cmd_line)++;
+	}
+	if (!add_token(start, *cmd_line, tokens, TOKEN_WORD))
+		return (1);
+	return (0);
+}
+
+int	tokenizer(const char *cmd_line, t_token **tokens)
+{
 	if (!cmd_line || !tokens)
 		return (1);
 	while (*cmd_line)
@@ -71,36 +106,12 @@ int	tokenizer(const char *cmd_line, t_token **tokens)
 			cmd_line++;
 		if (!*cmd_line)
 			break ;
-		if (*cmd_line && is_operator_char(*cmd_line))
+		if (is_operator_char(*cmd_line))
 		{
-			start = cmd_line;
-			if (cmd_line[1] && cmd_line[1] == *cmd_line)
-				cmd_line += 2;
-			else
-				cmd_line++;
-			if (!add_token(start, cmd_line, tokens, TOKEN_OPERATOR))
+			if (handle_operator_token(&cmd_line, tokens))
 				return (1);
-			continue ;
 		}
-		start = cmd_line;
-		while (*cmd_line && !is_space(*cmd_line)
-			&& !is_operator_char(*cmd_line))
-		{
-			if (*cmd_line == '\'' || *cmd_line == '\"')
-			{
-				quote = *cmd_line++;
-				while (*cmd_line && *cmd_line != quote)
-					cmd_line++;
-				if (*cmd_line != quote)
-					return (0);
-				if (!*cmd_line)
-					return (1);
-				cmd_line++;
-			}
-			else
-				cmd_line++;
-		}
-		if (!add_token(start, cmd_line, tokens, TOKEN_WORD))
+		else if (handle_word_token(&cmd_line, tokens))
 			return (1);
 	}
 	return (0);

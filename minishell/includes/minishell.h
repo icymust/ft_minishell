@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: steven <steven@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/08 11:04:46 by smorlier          #+#    #+#             */
-/*   Updated: 2026/02/25 22:31:21 by martinmust             ###   ########.fr       */
+/*   Created: 2026/03/21 23:28:47 by martinmust        #+#    #+#             */
+/*   Updated: 2026/03/21 23:29:24 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 
 # define PROMPT "Minishell>$ "
 
-// abstract syntax tree representation for the tokens
 typedef enum e_lexin_ast
 {
 	TOKEN_WORD = 0,
@@ -58,8 +57,7 @@ typedef struct s_cmd_set
 	char				*outfile;
 	char				*heredoc_delim;
 	char				**args;
-
-	int out_append; // 0 = >, 1 = >>
+	int					out_append;
 	int					fd_in;
 	int					fd_out;
 	pid_t				pid;

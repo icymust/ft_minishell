@@ -6,11 +6,11 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:57:17 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/16 21:00:56 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/20 03:01:57 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static int	prepare_heredoc_for_cmd(t_cmd_set *cmd_set)
 {

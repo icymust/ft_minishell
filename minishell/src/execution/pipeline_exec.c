@@ -6,31 +6,84 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:54:48 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/19 14:19:17 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/21 19:23:48 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
+
+static void	update_parent_after_fork(t_exec_state *state, t_cmd_set *step)
+{
+	if (state->prev_fd != -1)
+		close(state->prev_fd);
+	if (step->fd_in != -1)
+	{
+		close(step->fd_in);
+		step->fd_in = -1;
+	}
+	if (step->next)
+		state->prev_fd = state->fd[0];
+	else
+		state->prev_fd = -1;
+	if (step->next)
+		close(state->fd[1]);
+}
+
+static void	wait_pipeline_children(t_exec_state *state)
+{
+	while (1)
+	{
+		state->waited_pid = wait(&state->status);
+		if (state->waited_pid < 0)
+			break ;
+		if (state->waited_pid == state->last_pid)
+			state->last_status = state->status;
+	}
+}
+
+static void	init_exec_state(t_exec_state *state)
+{
+	state->last_status = 0;
+	state->last_pid = -1;
+	state->prev_fd = -1;
+	state->status = 0;
+}
+
+static int	run_pipeline_steps(t_cmd_set *step, t_exec_state *state,
+		t_data *data)
+{
+	while (step)
+	{
+		if (step->next)
+		{
+			if (pipe(state->fd) < 0)
+			{
+				perror("pipe");
+				return (-1);
+			}
+		}
+		state->pid = fork();
+		if (state->pid < 0)
+		{
+			perror("fork");
+			return (-1);
+		}
+		state->last_pid = state->pid;
+		if (state->pid == 0)
+			run_pipeline_child(state, step, data);
+		update_parent_after_fork(state, step);
+		step = step->next;
+	}
+	return (0);
+}
 
 int	execute_pipeline(t_data *data)
 {
-	t_cmd_set	*step;
-	int			fd[2];
-	pid_t		pid;
-	pid_t		waited_pid;
-	int			prev_fd;
-	int			last_status;
-	int			status;
-	pid_t		last_pid;
-	int			fd_in;
-	int			flags;
-	int			fd_out;
+	t_cmd_set		*step;
+	t_exec_state	state;
 
-	status = 0;
-	last_status = 0;
-	last_pid = -1;
-	prev_fd = -1;
 	step = data->t_pipeline;
+	init_exec_state(&state);
 	if (!step)
 		return (0);
 	if (prepare_heredocs(data->t_pipeline) != 0)
@@ -38,100 +91,14 @@ int	execute_pipeline(t_data *data)
 	if (step->next == NULL && is_parent_builtin(step))
 		return (run_parent_builtin(data, step));
 	setup_wait_signals();
-	while (step)
-	{
-		// Создаём пайп, если есть следующая команда
-		if (step->next)
-		{
-			if (pipe(fd) < 0)
-				return (perror("pipe"), -1);
-		}
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			return (-1);
-		}
-		last_pid = pid;
-		if (pid == 0)
-		{
-			// Перенаправление stdin из предыдущего пайпа
-			if (prev_fd != -1)
-			{
-				dup2(prev_fd, STDIN_FILENO);
-				close(prev_fd);
-			}
-			if (step->fd_in != -1)
-			{
-				dup2(step->fd_in, STDIN_FILENO);
-				close(step->fd_in);
-			}
-			// Перенаправление stdout в пайп
-			if (step->next)
-			{
-				dup2(fd[1], STDOUT_FILENO);
-				close(fd[1]);
-				close(fd[0]);
-			}
-			// Редирект ввода из файла
-			if (step->infile)
-			{
-				fd_in = open(step->infile, O_RDONLY);
-				if (fd_in < 0)
-				{
-					perror("minishell: infile");
-					exit(1);
-				}
-				dup2(fd_in, STDIN_FILENO);
-				close(fd_in);
-			}
-			// Редирект вывода в файл
-			if (step->outfile)
-			{
-				flags = O_WRONLY | O_CREAT | (step->out_append ? O_APPEND : O_TRUNC);
-				fd_out = open(step->outfile, flags, 0644);
-				if (fd_out < 0)
-				{
-					perror("minishell: outfile");
-					exit(1);
-				}
-				dup2(fd_out, STDOUT_FILENO);
-				close(fd_out);
-			}
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			status = execute_cmd_set(step, data);
-			exit(status);
-		}
-		// Родительский процесс
-		if (prev_fd != -1)
-			close(prev_fd);
-		if (step->fd_in != -1)
-		{
-			close(step->fd_in);
-			step->fd_in = -1;
-		}
-		// Сохраняем read-end пайпа для следующей команды
-		prev_fd = (step->next) ? fd[0] : -1;
-		if (step->next)
-			close(fd[1]);
-		step = step->next;
-	}
-
-	// Ждём завершения всех дочерних процессов
-	while (1)
-	{
-		waited_pid = wait(&status);
-		if (waited_pid < 0)
-			break ;
-		if (waited_pid == last_pid)
-			last_status = status;
-	}
+	if (run_pipeline_steps(step, &state, data) < 0)
+		return (setup_signals(), -1);
+	wait_pipeline_children(&state);
 	setup_signals();
-	if (WIFEXITED(last_status))
-		data->exit_code = WEXITSTATUS(last_status);
-	else if (WIFSIGNALED(last_status))
-		data->exit_code = 128 + WTERMSIG(last_status);
+	if (WIFEXITED(state.last_status))
+		data->exit_code = WEXITSTATUS(state.last_status);
+	else if (WIFSIGNALED(state.last_status))
+		data->exit_code = 128 + WTERMSIG(state.last_status);
 	else
 		data->exit_code = 1;
 	return (0);

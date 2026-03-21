@@ -94,7 +94,6 @@ typedef struct s_exec_state
 }						t_exec_state;
 
 int						minishell(char **env);
-void					print_banner(void);
 int						tokenizer(const char *cmd, t_token **tokens);
 void					free_tokens(t_token *tokens);
 int						is_space(char c);
@@ -138,9 +137,6 @@ void					add_redirect_out_to_cmd_set(t_data *data,
 void					add_append_to_cmd_set(t_data *data, t_cmd_set *cmd_set,
 							char *file);
 int						envp_index(t_data *data, const char *var_name);
-void					print_colored_token(t_token *previous_token,
-							t_token *token);
-void					print_cmd_set(t_cmd_set *cmd_set);
 int						create_pipeline(t_data *data);
 t_cmd_set				*new_cmd_in_pl(t_data *data, t_cmd_set *current_set,
 							char *name);

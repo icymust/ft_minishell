@@ -23,11 +23,9 @@ SRCS = \
 	src/serialize/lexer.c \
 	src/serialize/cmd_set.c \
 	src/serialize/cmd_redirect.c \
-	src/utils/banner.c \
 	src/utils/utils.c \
 	src/utils/exit.c \
 	src/minishell.c \
-	src/debug/debug_prints.c \
 	src/serialize/pipeline_build.c \
 	src/execution/pipeline_exec.c \
 	src/execution/pipeline_heredoc.c \

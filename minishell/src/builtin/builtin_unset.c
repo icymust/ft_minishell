@@ -23,35 +23,46 @@ static void	unset_env_entry(t_data *data, int index)
 	data->envp[index] = NULL;
 }
 
+static int	invalid_unset_arg(char *arg)
+{
+	int	name_len;
+
+	name_len = (int)ft_strlen(arg);
+	if (ft_strchr(arg, '=') || !is_valid_export_name(arg, name_len))
+	{
+		ft_putstr_fd("unset: invalid identifier: ", STDERR_FILENO);
+		ft_putendl_fd(arg, STDERR_FILENO);
+		return (1);
+	}
+	return (0);
+}
+
+static int	process_unset_arg(t_data *data, char *arg)
+{
+	int	index;
+
+	if (invalid_unset_arg(arg))
+		return (1);
+	index = envp_index(data, arg);
+	if (index < 0)
+		return (0);
+	unset_env_entry(data, index);
+	return (0);
+}
+
 int	builtin_unset(t_data *data, t_cmd_set *cmd_set)
 {
-	int		index;
 	int		i;
-	int		name_len;
 	int		status;
 
-	i = 0;
-	status = 0;
 	if (!data || !cmd_set || !cmd_set->args)
 		return (0);
+	i = 0;
+	status = 0;
 	while (cmd_set->args[i])
 	{
-		name_len = (int)ft_strlen(cmd_set->args[i]);
-		if (ft_strchr(cmd_set->args[i], '=')
-			|| !is_valid_export_name(cmd_set->args[i], name_len))
-		{
-			fprintf(stderr, "unset: invalid identifier: %s\n", cmd_set->args[i]);
+		if (process_unset_arg(data, cmd_set->args[i]) != 0)
 			status = 1;
-			i++;
-			continue ;
-		}
-		index = envp_index(data, cmd_set->args[i]);
-		if (index < 0)
-		{
-			i++;
-			continue ;
-		}
-		unset_env_entry(data, index);
 		i++;
 	}
 	return (status);

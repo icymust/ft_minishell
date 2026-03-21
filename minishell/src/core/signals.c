@@ -6,18 +6,18 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 15:19:25 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/21 21:42:19 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/21 22:57:10 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static volatile sig_atomic_t	signal_status;
+static volatile sig_atomic_t	g_signal_status;
 
 static void	handle_sigint(int sig)
 {
 	(void)sig;
-	signal_status = sig;
+	g_signal_status = sig;
 	exit_command(NULL);
 }
 
@@ -49,10 +49,10 @@ int	consume_signal_status(void)
 	int	status;
 
 	status = 0;
-	if (signal_status)
+	if (g_signal_status)
 	{
-		status = 128 + signal_status;
-		signal_status = 0;
+		status = 128 + g_signal_status;
+		g_signal_status = 0;
 	}
 	return (status);
 }

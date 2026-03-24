@@ -83,7 +83,8 @@ static int	handle_word_token(const char **cmd_line, t_token **tokens)
 			while (**cmd_line && **cmd_line != quote)
 				(*cmd_line)++;
 			if (**cmd_line != quote)
-				return (0);
+				return (fprintf(stderr,
+						"Syntax error: unclosed quote\n"), 1);
 			if (!**cmd_line)
 				return (1);
 			(*cmd_line)++;

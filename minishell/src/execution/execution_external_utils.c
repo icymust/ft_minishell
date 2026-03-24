@@ -40,6 +40,11 @@ static char	**build_exec_argv(t_cmd_set *cmd_set)
 int	prepare_external_exec(t_data *data, t_cmd_set *cmd_set,
 		char **cmd_path, char ***argv)
 {
+	if (ft_strchr(cmd_set->name, '/') && is_dir(cmd_set->name))
+	{
+		fprintf(stderr, "minishell: %s: Is a directory\n", cmd_set->name);
+		return (126);
+	}
 	*cmd_path = cmd_found(data, cmd_set);
 	if (!*cmd_path)
 	{

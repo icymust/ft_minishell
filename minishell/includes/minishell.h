@@ -115,6 +115,7 @@ int						lexer(t_data *data);
 int						is_builtin(t_cmd_set *cmd_set);
 int						execute_builtin(t_data *data, t_cmd_set *cmd_set);
 
+int					is_dir(char *name);
 char					*cmd_found(t_data *data, t_cmd_set *set);
 int						prepare_external_exec(t_data *data, t_cmd_set *cmd_set,
 							char **cmd_path, char ***argv);
@@ -166,6 +167,7 @@ char					*build_expanded_value(t_data *data, t_token *tok,
 							char *code);
 void					setup_signals(void);
 void					setup_wait_signals(void);
+void					setup_heredoc_signals(void);
 int						consume_signal_status(void);
 void					run_pipeline_child(t_exec_state *state, t_cmd_set *step,
 							t_data *data);

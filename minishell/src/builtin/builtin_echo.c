@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 22:15:31 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/02 22:42:20 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/24 00:51:15 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,17 @@ static int	is_n_option(const char *s)
 	if (!s || s[0] != '-')
 		return (0);
 	i = 1;
-	if (s[i] == 'n')
+	if (s[i] == '\0')
+		return (0);
+	while (s[i])
+	{
+		if (s[i] != 'n')
+			return (0);
 		i++;
-	return (i == 2 && s[i] == '\0');
+	}
+	return (1);
 }
+
 
 static void	print_echo_arg(char *str)
 {

@@ -35,7 +35,13 @@ static int	wait_external_child(pid_t pid)
 		return (-1);
 	}
 	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
+		if (WTERMSIG(status) == SIGQUIT)
+			write(2, "Quit (core dumped)\n", 19);
 		return (128 + WTERMSIG(status));
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (0);
@@ -72,6 +78,11 @@ int	execute_cmd_set(t_cmd_set *cmd_set, t_data *data)
 
 	if (!cmd_set || !data)
 		return (1);
+	if (!cmd_set->name)
+	{
+		data->exit_code = 0;
+		return (0);
+	}
 	if (is_builtin(cmd_set))
 		status = execute_builtin(data, cmd_set);
 	else

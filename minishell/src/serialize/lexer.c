@@ -12,18 +12,16 @@
 
 #include "minishell.h"
 
-void	lex_operators(t_token *token)
+int	lex_operators(t_token *token)
 {
 	if (token->value == NULL)
-	{
-		fprintf(stderr, "Lexer error: operator token with null value\n");
-		return ;
-	}
+		return (fprintf(stderr,
+				"Lexer error: operator token with null value\n"), 1);
 	if (ft_strncmp(token->value, "||", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '||'\n");
-	else if (ft_strncmp(token->value, "&&", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '&&'\n");
-	else if (ft_strncmp(token->value, "|", 2) == 0)
+		return (fprintf(stderr, "Lexer error: unsupported operator '||'\n"), 1);
+	if (ft_strncmp(token->value, "&&", 2) == 0)
+		return (fprintf(stderr, "Lexer error: unsupported operator '&&'\n"), 1);
+	if (ft_strncmp(token->value, "|", 2) == 0)
 		token->ast_type = LEX_PIPE;
 	else if (ft_strncmp(token->value, ">>", 3) == 0)
 		token->ast_type = LEX_APPEND;
@@ -34,15 +32,17 @@ void	lex_operators(t_token *token)
 	else if (ft_strncmp(token->value, "<", 2) == 0)
 		token->ast_type = LEX_REDIRECT_IN;
 	else if (ft_strncmp(token->value, "&", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '&'\n");
+		return (fprintf(stderr, "Lexer error: unsupported operator '&'\n"), 1);
 	else
-		fprintf(stderr, "Lexer error: unknown operator '%s'\n", token->value);
+		return (fprintf(stderr, "Lexer error: unknown operator '%s'\n",
+				token->value), 1);
+	return (0);
 }
 
-void	lex_words(t_token *token, t_token *previous_token)
+int	lex_words(t_token *token, t_token *previous_token)
 {
 	if (!token)
-		return ;
+		return (0);
 	if (previous_token == NULL)
 		token->ast_type = LEX_COMMAND;
 	else if (previous_token->ast_type == LEX_PIPE)
@@ -60,7 +60,9 @@ void	lex_words(t_token *token, t_token *previous_token)
 	else if (previous_token->ast_type == LEX_ARGS)
 		token->ast_type = LEX_ARGS;
 	else
-		exit_command("Syntax error: unexpected token after redirection path");
+		return (fprintf(stderr,
+				"Syntax error: unexpected token after redirection path\n"), 1);
+	return (0);
 }
 
 int	lexer(t_data *data)
@@ -77,10 +79,10 @@ int	lexer(t_data *data)
 	token = data->tokens;
 	while (token)
 	{
-		if (token->ast_type == TOKEN_WORD)
-			lex_words(token, previous_token);
-		else if (token->ast_type == TOKEN_OPERATOR)
-			lex_operators(token);
+		if (token->ast_type == TOKEN_WORD && lex_words(token, previous_token) != 0)
+			return (1);
+		if (token->ast_type == TOKEN_OPERATOR && lex_operators(token) != 0)
+			return (1);
 		previous_token = token;
 		token = token->next;
 	}

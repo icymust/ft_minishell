@@ -39,6 +39,10 @@ static void	wait_pipeline_children(t_exec_state *state)
 		if (state->waited_pid == state->last_pid)
 			state->last_status = state->status;
 	}
+	if (WIFSIGNALED(state->last_status) && WTERMSIG(state->last_status) == SIGINT)
+		write(1, "\n", 1);
+	if (WIFSIGNALED(state->last_status) && WTERMSIG(state->last_status) == SIGQUIT)
+		write(2, "Quit (core dumped)\n", 19);
 }
 
 static void	init_exec_state(t_exec_state *state)
@@ -81,12 +85,19 @@ int	execute_pipeline(t_data *data)
 {
 	t_cmd_set		*step;
 	t_exec_state	state;
+	int			heredoc_status;
 
 	step = data->t_pipeline;
 	init_exec_state(&state);
 	if (!step)
 		return (0);
-	if (prepare_heredocs(data->t_pipeline) != 0)
+	heredoc_status = prepare_heredocs(data->t_pipeline);
+	if (heredoc_status == 130)
+	{
+		data->exit_code = 130;
+		return (0);
+	}
+	if (heredoc_status != 0)
 		return (-1);
 	if (step->next == NULL && is_parent_builtin(step))
 		return (run_parent_builtin(data, step));

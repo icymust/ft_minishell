@@ -14,8 +14,6 @@
 
 void	exit_minishell(t_data *data, const char *message, int exit_code)
 {
-	if (exit_code != 0 && ft_strncmp(message, "EOF", 3) != 0)
-		perror("Error");
 	if (message && ft_strncmp(message, "EOF", 3) != 0)
 		fprintf(stderr, "%s\n", message);
 	free_data(data);

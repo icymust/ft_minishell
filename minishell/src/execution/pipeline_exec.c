@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:54:48 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/21 19:23:48 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 00:02:56 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ static void	wait_pipeline_children(t_exec_state *state)
 		if (state->waited_pid == state->last_pid)
 			state->last_status = state->status;
 	}
-	if (WIFSIGNALED(state->last_status) && WTERMSIG(state->last_status) == SIGINT)
+	if (WIFSIGNALED(state->last_status)
+		&& WTERMSIG(state->last_status) == SIGINT)
 		write(1, "\n", 1);
-	if (WIFSIGNALED(state->last_status) && WTERMSIG(state->last_status) == SIGQUIT)
+	if (WIFSIGNALED(state->last_status)
+		&& WTERMSIG(state->last_status) == SIGQUIT)
 		write(2, "Quit (core dumped)\n", 19);
 }
 
@@ -58,13 +60,10 @@ static int	run_pipeline_steps(t_cmd_set *step, t_exec_state *state,
 {
 	while (step)
 	{
-		if (step->next)
+		if (step->next && pipe(state->fd) < 0)
 		{
-			if (pipe(state->fd) < 0)
-			{
-				perror("pipe");
-				return (-1);
-			}
+			perror("pipe");
+			return (-1);
 		}
 		state->pid = fork();
 		if (state->pid < 0)
@@ -85,7 +84,7 @@ int	execute_pipeline(t_data *data)
 {
 	t_cmd_set		*step;
 	t_exec_state	state;
-	int			heredoc_status;
+	int				heredoc_status;
 
 	step = data->t_pipeline;
 	init_exec_state(&state);
@@ -106,11 +105,6 @@ int	execute_pipeline(t_data *data)
 		return (setup_signals(), -1);
 	wait_pipeline_children(&state);
 	setup_signals();
-	if (WIFEXITED(state.last_status))
-		data->exit_code = WEXITSTATUS(state.last_status);
-	else if (WIFSIGNALED(state.last_status))
-		data->exit_code = 128 + WTERMSIG(state.last_status);
-	else
-		data->exit_code = 1;
+	set_pipeline_exit_code(data, state.last_status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 23:28:47 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/21 23:29:24 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 00:07:32 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,10 @@ char					*build_expanded_value(t_data *data, t_token *tok,
 							char *code);
 void					setup_signals(void);
 void					setup_wait_signals(void);
-void					setup_heredoc_signals(void);
 int						consume_signal_status(void);
 void					run_pipeline_child(t_exec_state *state, t_cmd_set *step,
 							t_data *data);
+void					set_pipeline_exit_code(t_data *data, int status);
+int						wait_heredoc_child(pid_t pid, int *fd, t_cmd_set *cmd_set);
 
 #endif

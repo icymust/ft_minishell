@@ -6,11 +6,21 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 00:00:00 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/21 00:00:00 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 00:07:35 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_pipeline_exit_code(t_data *data, int status)
+{
+	if (WIFEXITED(status))
+		data->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_code = 128 + WTERMSIG(status);
+	else
+		data->exit_code = 1;
+}
 
 int	is_parent_builtin(t_cmd_set *cmd_set)
 {
@@ -53,4 +63,33 @@ void	restore_parent_stdio(int *saved_stdio)
 		perror("dup");
 	close(saved_stdio[0]);
 	close(saved_stdio[1]);
+}
+
+int	wait_heredoc_child(pid_t pid, int *fd, t_cmd_set *cmd_set)
+{
+	int	status;
+
+	close(fd[1]);
+	setup_wait_signals();
+	if (waitpid(pid, &status, 0) < 0)
+	{
+		setup_signals();
+		close(fd[0]);
+		perror("waitpid");
+		return (1);
+	}
+	setup_signals();
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		write(1, "\n", 1);
+		close(fd[0]);
+		return (130);
+	}
+	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
+	{
+		close(fd[0]);
+		return (1);
+	}
+	cmd_set->fd_in = fd[0];
+	return (0);
 }

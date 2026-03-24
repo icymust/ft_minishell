@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/16 20:57:17 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/24 00:00:00 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 00:07:12 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static void	heredoc_child_process(int *fd, char *delim)
 	setup_heredoc_child_signals();
 	while (1)
 	{
-		write(1, "heredoc> ", 9);
-		line = get_next_line(STDIN_FILENO);
+		line = readline("heredoc> ");
 		if (!line)
 			break ;
 		if (is_heredoc_delim(line, delim))
@@ -52,27 +51,11 @@ static void	heredoc_child_process(int *fd, char *delim)
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
 		free(line);
 	}
 	close(fd[1]);
 	exit(0);
-}
-
-static int	wait_heredoc_child(pid_t pid, int *fd, t_cmd_set *cmd_set)
-{
-	int	status;
-
-	close(fd[1]);
-	setup_wait_signals();
-	if (waitpid(pid, &status, 0) < 0)
-		return (setup_signals(), close(fd[0]), perror("waitpid"), 1);
-	setup_signals();
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		return (write(1, "\n", 1), close(fd[0]), 130);
-	if (!WIFEXITED(status) || WEXITSTATUS(status) != 0)
-		return (close(fd[0]), 1);
-	cmd_set->fd_in = fd[0];
-	return (0);
 }
 
 static int	prepare_heredoc_for_cmd(t_cmd_set *cmd_set)
@@ -83,10 +66,18 @@ static int	prepare_heredoc_for_cmd(t_cmd_set *cmd_set)
 	if (!cmd_set || !cmd_set->heredoc_delim)
 		return (0);
 	if (pipe(fd) < 0)
-		return (perror("pipe"), 1);
+	{
+		perror("pipe");
+		return (1);
+	}
 	pid = fork();
 	if (pid < 0)
-		return (close(fd[0]), close(fd[1]), perror("fork"), 1);
+	{
+		close(fd[0]);
+		close(fd[1]);
+		perror("fork");
+		return (1);
+	}
 	if (pid == 0)
 		heredoc_child_process(fd, cmd_set->heredoc_delim);
 	return (wait_heredoc_child(pid, fd, cmd_set));

@@ -31,7 +31,7 @@ Command:
 ```
 
 Your output:
-Minishell>$       [spaces]
+Minishell>$      
 Minishell>$ 
 
 ## 04. Ctrl+D on empty prompt
@@ -61,7 +61,7 @@ Command:
 ```
 
 Your output:
-Minishell>$ ./minishell 
+Minishell>$ ./minishell
 Minishell>$ 
 
 ## 08. Absolute executable path
@@ -83,7 +83,8 @@ ls
 
 Your output:
 Minishell>$ ls
-includes  libft  Makefile  Makefile.local  minishell  src
+includes  libft  Makefile  MANUAL_TEST_CHECKLIST.md  minishell  src
+Minishell>$ 
 
 ## 10. PATH command with args
 Command:
@@ -94,6 +95,7 @@ wc -l Makefile
 Your output:
 Minishell>$ wc -l Makefile
 65 Makefile
+Minishell>$ 
 
 ## 11. Command not found
 Command:
@@ -104,6 +106,7 @@ idontexist
 Your output:
 Minishell>$ idontexist
 Command not found: idontexist
+Minishell>$ 
 
 ## 12. Directory as command
 Command:
@@ -113,7 +116,8 @@ Command:
 
 Your output:
 Minishell>$ /bin
-Command not found: /bin
+minishell: /bin: Is a directory
+Minishell>$ 
 
 ## 13. `echo` without args
 Command:
@@ -135,6 +139,7 @@ echo hello
 Your output:
 Minishell>$ echo hello
 hello
+Minishell>$ 
 
 ## 15. `echo -n`
 Command:
@@ -185,9 +190,6 @@ echo "hello world"
 ```
 
 Your output:
-Minishell>$ echo "hello world"
-hello world
-Minishell>$ 
 
 ## 20. `echo` mixed quotes
 Command:
@@ -321,7 +323,7 @@ LC_PAPER=ru_RU.UTF-8
 LANG=en_US.UTF-8
 LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 GIT_ASKPASS=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass.sh
-SSH_CONNECTION=192.168.1.111 59029 192.168.1.116 22
+SSH_CONNECTION=192.168.1.111 61822 192.168.1.116 22
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
 LESSCLOSE=/usr/bin/lesspipe %s %s
@@ -334,9 +336,9 @@ VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-8668239cfb.sock
 SHLVL=2
 LC_TELEPHONE=ru_RU.UTF-8
 LC_MEASUREMENT=ru_RU.UTF-8
-XDG_SESSION_ID=17
+XDG_SESSION_ID=4
 XDG_RUNTIME_DIR=/run/user/1000
-SSH_CLIENT=192.168.1.111 59029 22
+SSH_CLIENT=192.168.1.111 61822 22
 LC_TIME=ru_RU.UTF-8
 VSCODE_GIT_ASKPASS_MAIN=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass-main.js
 XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -344,9 +346,9 @@ BROWSER=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad339
 PATH=/home/martin/.local/bin:/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/bin/remote-cli:/home/martin/.local/bin:/home/martin/.local/bin:/home/martin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 LC_NUMERIC=ru_RU.UTF-8
-OLDPWD=/home/martin/Desktop/github/ft_minishell
 TERM_PROGRAM=vscode
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-a9b06bae-4ff5-4eca-97a0-b158b061f681.sock
+VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-255f34fd-6ce3-43dc-a1c1-ae6eedae5c87.sock
+OLDPWD=/home/martin/Desktop/github/ft_minishell
 _=./minishell
 Minishell>$ 
 
@@ -375,7 +377,7 @@ LC_PAPER=ru_RU.UTF-8
 LANG=en_US.UTF-8
 LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 GIT_ASKPASS=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass.sh
-SSH_CONNECTION=192.168.1.111 59029 192.168.1.116 22
+SSH_CONNECTION=192.168.1.111 61822 192.168.1.116 22
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
 LESSCLOSE=/usr/bin/lesspipe %s %s
@@ -388,9 +390,9 @@ VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-8668239cfb.sock
 SHLVL=2
 LC_TELEPHONE=ru_RU.UTF-8
 LC_MEASUREMENT=ru_RU.UTF-8
-XDG_SESSION_ID=17
+XDG_SESSION_ID=4
 XDG_RUNTIME_DIR=/run/user/1000
-SSH_CLIENT=192.168.1.111 59029 22
+SSH_CLIENT=192.168.1.111 61822 22
 LC_TIME=ru_RU.UTF-8
 VSCODE_GIT_ASKPASS_MAIN=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass-main.js
 XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -398,9 +400,9 @@ BROWSER=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad339
 PATH=/home/martin/.local/bin:/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/bin/remote-cli:/home/martin/.local/bin:/home/martin/.local/bin:/home/martin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 LC_NUMERIC=ru_RU.UTF-8
-OLDPWD=/home/martin/Desktop/github/ft_minishell
 TERM_PROGRAM=vscode
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-a9b06bae-4ff5-4eca-97a0-b158b061f681.sock
+VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-255f34fd-6ce3-43dc-a1c1-ae6eedae5c87.sock
+OLDPWD=/home/martin/Desktop/github/ft_minishell
 _=./minishell
 Minishell>$ 
 
@@ -431,7 +433,7 @@ LC_PAPER=ru_RU.UTF-8
 LANG=en_US.UTF-8
 LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 GIT_ASKPASS=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass.sh
-SSH_CONNECTION=192.168.1.111 59029 192.168.1.116 22
+SSH_CONNECTION=192.168.1.111 61822 192.168.1.116 22
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
 LESSCLOSE=/usr/bin/lesspipe %s %s
@@ -444,9 +446,9 @@ VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-8668239cfb.sock
 SHLVL=2
 LC_TELEPHONE=ru_RU.UTF-8
 LC_MEASUREMENT=ru_RU.UTF-8
-XDG_SESSION_ID=17
+XDG_SESSION_ID=4
 XDG_RUNTIME_DIR=/run/user/1000
-SSH_CLIENT=192.168.1.111 59029 22
+SSH_CLIENT=192.168.1.111 61822 22
 LC_TIME=ru_RU.UTF-8
 VSCODE_GIT_ASKPASS_MAIN=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass-main.js
 XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -454,9 +456,9 @@ BROWSER=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad339
 PATH=/home/martin/.local/bin:/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/bin/remote-cli:/home/martin/.local/bin:/home/martin/.local/bin:/home/martin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 LC_NUMERIC=ru_RU.UTF-8
-OLDPWD=/home/martin/Desktop/github/ft_minishell
 TERM_PROGRAM=vscode
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-a9b06bae-4ff5-4eca-97a0-b158b061f681.sock
+VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-255f34fd-6ce3-43dc-a1c1-ae6eedae5c87.sock
+OLDPWD=/home/martin/Desktop/github/ft_minishell
 _=./minishell
 TESTVAR=hello
 Minishell>$ 
@@ -490,7 +492,7 @@ LC_PAPER=ru_RU.UTF-8
 LANG=en_US.UTF-8
 LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 GIT_ASKPASS=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass.sh
-SSH_CONNECTION=192.168.1.111 59029 192.168.1.116 22
+SSH_CONNECTION=192.168.1.111 61822 192.168.1.116 22
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
 LESSCLOSE=/usr/bin/lesspipe %s %s
@@ -503,9 +505,9 @@ VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-8668239cfb.sock
 SHLVL=2
 LC_TELEPHONE=ru_RU.UTF-8
 LC_MEASUREMENT=ru_RU.UTF-8
-XDG_SESSION_ID=17
+XDG_SESSION_ID=4
 XDG_RUNTIME_DIR=/run/user/1000
-SSH_CLIENT=192.168.1.111 59029 22
+SSH_CLIENT=192.168.1.111 61822 22
 LC_TIME=ru_RU.UTF-8
 VSCODE_GIT_ASKPASS_MAIN=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass-main.js
 XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -513,9 +515,9 @@ BROWSER=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad339
 PATH=/home/martin/.local/bin:/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/bin/remote-cli:/home/martin/.local/bin:/home/martin/.local/bin:/home/martin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 LC_NUMERIC=ru_RU.UTF-8
-OLDPWD=/home/martin/Desktop/github/ft_minishell
 TERM_PROGRAM=vscode
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-a9b06bae-4ff5-4eca-97a0-b158b061f681.sock
+VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-255f34fd-6ce3-43dc-a1c1-ae6eedae5c87.sock
+OLDPWD=/home/martin/Desktop/github/ft_minishell
 _=./minishell
 TESTVAR=two
 Minishell>$ 
@@ -549,7 +551,7 @@ LC_PAPER=ru_RU.UTF-8
 LANG=en_US.UTF-8
 LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
 GIT_ASKPASS=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass.sh
-SSH_CONNECTION=192.168.1.111 59029 192.168.1.116 22
+SSH_CONNECTION=192.168.1.111 61822 192.168.1.116 22
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
 LESSCLOSE=/usr/bin/lesspipe %s %s
@@ -562,9 +564,9 @@ VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-8668239cfb.sock
 SHLVL=2
 LC_TELEPHONE=ru_RU.UTF-8
 LC_MEASUREMENT=ru_RU.UTF-8
-XDG_SESSION_ID=17
+XDG_SESSION_ID=4
 XDG_RUNTIME_DIR=/run/user/1000
-SSH_CLIENT=192.168.1.111 59029 22
+SSH_CLIENT=192.168.1.111 61822 22
 LC_TIME=ru_RU.UTF-8
 VSCODE_GIT_ASKPASS_MAIN=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/extensions/git/dist/askpass-main.js
 XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -572,9 +574,9 @@ BROWSER=/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad339
 PATH=/home/martin/.local/bin:/home/martin/.vscode-server/cli/servers/Stable-07ff9d6178ede9a1bd12ad3399074d726ebe6e43/server/bin/remote-cli:/home/martin/.local/bin:/home/martin/.local/bin:/home/martin/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 LC_NUMERIC=ru_RU.UTF-8
-OLDPWD=/home/martin/Desktop/github/ft_minishell
 TERM_PROGRAM=vscode
-VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-a9b06bae-4ff5-4eca-97a0-b158b061f681.sock
+VSCODE_IPC_HOOK_CLI=/run/user/1000/vscode-ipc-255f34fd-6ce3-43dc-a1c1-ae6eedae5c87.sock
+OLDPWD=/home/martin/Desktop/github/ft_minishell
 _=./minishell
 Minishell>$ 
 
@@ -596,7 +598,7 @@ exit
 
 Your output:
 Minishell>$ exit
-martin@ubuntu22:~/Desktop/github/ft_minishell/minishell$ 
+Minishell>$ 
 
 ## 36. `$HOME`
 Command:
@@ -656,8 +658,6 @@ echo $?
 Your output:
 Minishell>$ idontexist
 Command not found: idontexist
-Minishell>$ echo $?
-127
 Minishell>$ 
 
 ## 41. Expansion in double quotes
@@ -765,7 +765,7 @@ fclean: clean
         rm -f $(NAME)
         rm -rf $(NAME).dSYM
 
-.PHONY: all libft clean fclean re $(NAME) 
+.PHONY: all libft clean fclean re $(NAME)
 Minishell>$ 
 
 ## 45. Output redirection truncate
@@ -814,11 +814,10 @@ Command:
 > out.txt
 ```
 
-Your output:
+Your output: (создался файл)
 Minishell>$ > out.txt
-Syntax error: missing redirection target
-Pipeline creation failed
-martin@ubuntu22:~/Desktop/github/ft_minishell/minishell$ 
+Minishell>$ 
+
 
 ## 49. Output redirection on builtin
 Command:
@@ -971,7 +970,7 @@ EOF
 
 Your output:
 Minishell>$ wc -l << EOF
-heredoc> one
+heredoc> one 
 heredoc> two
 heredoc> three
 heredoc> EOF
@@ -1005,7 +1004,7 @@ Then press `Ctrl+C`
 Your output:
 Minishell>$ cat << EOF
 heredoc> ^C
-heredoc> 
+Minishell>$ 
 
 ## 63. Ctrl+D during heredoc
 Action:
@@ -1016,8 +1015,7 @@ Then press `Ctrl+D`
 
 Your output:
 Minishell>$ cat << EOF
-heredoc> 
-Minishell>$ 
+heredoc> Minishell>$ 
 
 ## 64. Unclosed single quote
 Command:
@@ -1026,7 +1024,9 @@ echo 'hello
 ```
 
 Your output:
-
+Minishell>$ echo 'hello
+Syntax error: unclosed quote
+Minishell>$ 
 
 ## 65. Unclosed double quote
 Command:
@@ -1035,8 +1035,8 @@ echo "hello
 ```
 
 Your output:
-Minishell>$ echo 'hello
-
+Minishell>$ echo "hello
+Syntax error: unclosed quote
 Minishell>$ 
 
 ## 66. Syntax error: leading pipe
@@ -1047,7 +1047,7 @@ Command:
 
 Your output:
 Minishell>$ | ls
-'$'   builtout.txt   includes   libft   Makefile   Makefile.local   minishell   out.txt   pipeout.txt   pwdout.txt   src
+Syntax error: pipe
 Minishell>$ 
 
 ## 67. Syntax error: trailing pipe
@@ -1058,7 +1058,7 @@ ls |
 
 Your output:
 Minishell>$ ls |
-'$'   builtout.txt   includes   libft   Makefile   Makefile.local   minishell   out.txt   pipeout.txt   pwdout.txt   src
+Syntax error: pipe
 Minishell>$ 
 
 ## 68. Syntax error: double pipe unsupported
@@ -1070,9 +1070,6 @@ ls || wc
 Your output:
 Minishell>$ ls || wc
 Lexer error: unsupported operator '||'
-Syntax error: unexpected token after redirection path
-
-Minishell>$ '$'   builtout.txt   includes   libft   Makefile   Makefile.local   minishell   out.txt   pipeout.txt   pwdout.txt   src
 Minishell>$ 
 
 ## 69. Syntax error: `&&` unsupported
@@ -1084,9 +1081,6 @@ ls && pwd
 Your output:
 Minishell>$ ls && pwd
 Lexer error: unsupported operator '&&'
-Syntax error: unexpected token after redirection path
-
-Minishell>$ '$'   builtout.txt   includes   libft   Makefile   Makefile.local   minishell   out.txt   pipeout.txt   pwdout.txt   src
 Minishell>$ 
 
 ## 70. Syntax error: missing redirect target
@@ -1098,8 +1092,7 @@ echo hello >
 Your output:
 Minishell>$ echo hello >
 Syntax error: missing redirection target
-Pipeline creation failed
-martin@ubuntu22:~/Desktop/github/ft_minishell/minishell$ 
+Minishell>$ 
 
 ## 71. Syntax error: missing input target
 Command:
@@ -1110,8 +1103,7 @@ cat <
 Your output:
 Minishell>$ cat <
 Syntax error: missing redirection target
-Pipeline creation failed
-martin@ubuntu22:~/Desktop/github/ft_minishell/minishell$ 
+Minishell>$ 
 
 ## 72. Unsupported semicolon
 Command:
@@ -1122,7 +1114,7 @@ echo one ; echo two
 Your output:
 Minishell>$ echo one ; echo two
 one ; echo two
-Minishell>$ 
+Minishell>$
 
 ## 73. Unsupported backslash behavior
 Command:
@@ -1133,7 +1125,7 @@ echo hello\ world
 Your output:
 Minishell>$ echo hello\ world
 hello\ world
-Minishell>$ 
+Minishell>$
 
 ## 74. History check
 Action: Run several commands, then press `Arrow Up`
@@ -1142,7 +1134,7 @@ Your output:
 `Arrow Up`
 Minishell>$ echo hello\ world
 `Arrow Up`
-Minishell>$ echo one ; echo two
+Minishell>$ clear
 
 ## 75. Ctrl+C during foreground external command
 Action:
@@ -1153,7 +1145,8 @@ Then press `Ctrl+C`
 
 Your output:
 Minishell>$ cat
-^CMinishell>$ 
+^C
+Minishell>$ 
 
 ## 76. `$?` after Ctrl+C
 Command sequence:
@@ -1167,7 +1160,8 @@ echo $?
 
 Your output:
 Minishell>$ cat
-^CMinishell>$ echo $?
+^C
+Minishell>$ echo $?
 130
 Minishell>$ 
 
@@ -1180,7 +1174,8 @@ Then press `Ctrl+\`
 
 Your output:
 Minishell>$ cat
-^\Minishell>$ 
+^\Quit (core dumped)
+Minishell>$ 
 
 ## 78. `$?` after Ctrl+\
 Command sequence:
@@ -1194,7 +1189,8 @@ echo $?
 
 Your output:
 Minishell>$ cat
-^\Minishell>echo $?
+^\Quit (core dumped)
+Minishell>$ echo $?
 131
 Minishell>$ 
 
@@ -1224,46 +1220,85 @@ cat < Makefile | wc -l
 - Confirm shell still works after all of them
 
 Your output:
-
 Minishell>$ echo hi
 hi
 Minishell>$ pwd
 /home/martin/Desktop/github/ft_minishell/minishell
 Minishell>$ ls
-'$'   builtout.txt   includes   libft   Makefile   Makefile.local   minishell   out.txt   pipeout.txt   pwdout.txt   src
+builtout.txt  includes  libft  Makefile  MANUAL_TEST_CHECKLIST.md  minishell  out2.txt  out.txt  pipeout.txt  pwdout.txt  src
 Minishell>$ echo hello | wc -c
 6
 Minishell>$ cat < Makefile | wc -l
 65
 Minishell>$ 
 
+## 81. Directory status code
+Command:
+```sh
+/bin
+echo $?
+```
+
+Your output:
+Minishell>$ /bin
+minishell: /bin: Is a directory
+Minishell>$ echo $?
+126
+Minishell>$ 
+
+## 82. Heredoc Ctrl+C status
+Action:
+- Run `cat << EOF`
+- Press `Ctrl+C`
+- Then run:
+```sh
+echo $?
+```
+
+Your output:
+Minishell>$ cat << EOF
+heredoc> ^C
+Minishell>$ echo $?
+130
+Minishell>$ 
+
+## 83. Foreground external Ctrl+C status
+Action:
+- Run `cat`
+- Press `Ctrl+C`
+- Then run:
+```sh
+echo $?
+```
+
+Your output:
+Minishell>$ cat
+^C
+Minishell>$ echo $?
+130
+Minishell>$ 
+
+## 84. Foreground external Ctrl+\ status
+Action:
+- Run `cat`
+- Press `Ctrl+\`
+- Then run:
+```sh
+echo $?
+```
+
+Your output:
+Minishell>$ cat
+^\Quit (core dumped)
+Minishell>$ echo $?
+131
+Minishell>$ 
 
 
-## Fix Queue
-Work through these one by one.
+-----------------
+cat + cntrl+d
 
-Priority 1: syntax errors must not exit minishell
-- [x] 48. `> out.txt` should not kill the shell. It currently reports a syntax error and exits.
-- [x] 70. `echo hello >` should report syntax error and stay in minishell.
-- [x] 71. `cat <` should report syntax error and stay in minishell.
-
-Priority 2: unclosed quotes
-- [x] 64. Unclosed single quote is not handled correctly.
-- [x] 65. Unclosed double quote is not handled correctly.
-
-Priority 3: pipe syntax validation
-- [x] 66. `| ls` should be a syntax error, but `ls` is executed.
-- [x] 67. `ls |` should be a syntax error, but `ls` is executed.
-- [x] 68. `ls || wc` prints an error but still executes `ls`.
-- [x] 69. `ls && pwd` prints an error but still executes `ls`.
-
-Priority 4: heredoc signal handling
-- [x] 62. `Ctrl+C` during heredoc should abort heredoc and return to the main prompt.
-
-Priority 5: signal output formatting
-- [x] 75. `Ctrl+C` during foreground external command prints prompt on the same line.
-- [x] 77. `Ctrl+\\` during foreground external command prints wrong output/prompt behavior.
-- [x] 78. `$?` after `Ctrl+\\` is correct, but prompt/output formatting is still wrong.
-
-Optional cleanup
-- [x] 12. Running a directory as a command should not say `Command not found`.
+Minishell>$ cat
+Minishell>$ echo $?
+0
+Minishell>$ 

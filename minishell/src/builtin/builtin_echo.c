@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 22:15:31 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/24 00:51:15 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/24 23:35:56 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int	is_n_option(const char *s)
 	}
 	return (1);
 }
-
 
 static void	print_echo_arg(char *str)
 {

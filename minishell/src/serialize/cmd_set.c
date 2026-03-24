@@ -46,6 +46,21 @@ t_cmd_set	*new_cmd_set(char *name)
 	return (cmd_set);
 }
 
+t_cmd_set	*new_cmd_in_pl(t_data *data, t_cmd_set *current_set, char *name)
+{
+	if (!current_set)
+	{
+		current_set = new_cmd_set(name);
+		data->t_pipeline = current_set;
+	}
+	else
+	{
+		current_set->next = new_cmd_set(name);
+		current_set = current_set->next;
+	}
+	return (current_set);
+}
+
 int	add_arg_to_cmd_set(t_cmd_set *cmd_set, char *arg)
 {
 	char	**new_args;

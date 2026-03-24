@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/23 19:50:22 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/21 21:26:06 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/24 23:43:26 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int	execute_external_command(t_data *data, t_cmd_set *cmd_set)
 	{
 		free(cmd_path);
 		free(argv);
-		return (perror("fork"), -1);
+		perror("fork");
+		return (-1);
 	}
 	if (pid == 0)
 		run_external_child(data, cmd_path, argv);

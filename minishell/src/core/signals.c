@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 15:19:25 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/24 00:00:00 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/24 23:37:35 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ void	setup_wait_signals(void)
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	setup_heredoc_signals(void)
-{
 }
 
 int	consume_signal_status(void)

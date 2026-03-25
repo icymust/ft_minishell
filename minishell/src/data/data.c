@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+t_data	*init_shell_data(char **env)
+{
+	t_data	*data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
+	if (init_data(data, env))
+	{
+		free_data(data);
+		return (NULL);
+	}
+	return (data);
+}
+
 int	init_data(t_data *data, char **env)
 {
 	t_token	*tokens;

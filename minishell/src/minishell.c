@@ -6,25 +6,21 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/24 17:36:44 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 01:44:30 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_data	*init_shell_data(char **env)
+static int	handle_empty_signal(t_data *data, char *cmd, int status)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	if (init_data(data, env))
-	{
-		free_data(data);
-		return (NULL);
-	}
-	return (data);
+	if (!status)
+		return (0);
+	data->exit_code = status;
+	if (cmd[0] != '\0')
+		return (0);
+	free(cmd);
+	return (1);
 }
 
 static int	prepare_command_input(t_data *data, char *cmd)
@@ -99,15 +95,8 @@ int	minishell(char **env)
 		status = consume_signal_status();
 		if (!cmd)
 			exit_minishell(data, "EOF", 0);
-		if (status)
-		{
-			data->exit_code = status;
-			if (cmd[0] == '\0')
-			{
-				free(cmd);
-				continue ;
-			}
-		}
+		if (handle_empty_signal(data, cmd, status))
+			continue ;
 		process_command(data, cmd);
 	}
 	return (0);

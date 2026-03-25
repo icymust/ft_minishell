@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+void	free_cmd_allocs(t_cmd_set *cmd_set);
+
 void	init_cmd_set(t_cmd_set *cmd_set)
 {
 	if (!cmd_set)
@@ -21,6 +23,7 @@ void	init_cmd_set(t_cmd_set *cmd_set)
 	cmd_set->outfile = NULL;
 	cmd_set->heredoc_delim = NULL;
 	cmd_set->args = NULL;
+	cmd_set->redirs = NULL;
 	cmd_set->out_append = 0;
 	cmd_set->fd_in = -1;
 	cmd_set->fd_out = -1;
@@ -89,24 +92,16 @@ int	add_arg_to_cmd_set(t_cmd_set *cmd_set, char *arg)
 
 void	free_cmd_set(t_cmd_set *cmd_set)
 {
-	int	i;
-
-	i = 0;
 	if (!cmd_set)
 		return ;
 	free(cmd_set->name);
 	free(cmd_set->infile);
 	free(cmd_set->outfile);
 	free(cmd_set->heredoc_delim);
+	free_cmd_allocs(cmd_set);
 	if (cmd_set->fd_in != -1)
 		close(cmd_set->fd_in);
 	if (cmd_set->fd_out != -1)
 		close(cmd_set->fd_out);
-	if (cmd_set->args)
-	{
-		while (cmd_set->args[i])
-			free(cmd_set->args[i++]);
-		free(cmd_set->args);
-	}
 	free(cmd_set);
 }

@@ -19,11 +19,6 @@ int	builtin_cd(t_data *data, t_cmd_set *cmd_set)
 	path = NULL;
 	if (!cmd_set)
 		return (1);
-	if (cmd_set->args && cmd_set->args[1])
-	{
-		printf("cd: too many arguments\n");
-		return (1);
-	}
 	if (cmd_set->args && cmd_set->args[0])
 		path = cmd_set->args[0];
 	else

@@ -39,3 +39,33 @@ char	*ft_strndup(const char *start, int size)
 	line[i] = '\0';
 	return (line);
 }
+
+void	clear_command_state(t_data *data)
+{
+	if (!data)
+		return ;
+	if (data->t_pipeline)
+		free_pipeline(data);
+	if (data->tokens)
+		free_tokens(data->tokens);
+	data->t_pipeline = NULL;
+	data->tokens = NULL;
+}
+
+void	free_cmd_allocs(t_cmd_set *cmd_set)
+{
+	int		i;
+	t_redir	*next_redir;
+
+	i = 0;
+	while (cmd_set->redirs)
+	{
+		next_redir = cmd_set->redirs->next;
+		free(cmd_set->redirs->file);
+		free(cmd_set->redirs);
+		cmd_set->redirs = next_redir;
+	}
+	while (cmd_set->args && cmd_set->args[i])
+		free(cmd_set->args[i++]);
+	free(cmd_set->args);
+}

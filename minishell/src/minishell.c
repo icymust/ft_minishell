@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 11:04:06 by smorlier          #+#    #+#             */
-/*   Updated: 2026/03/25 01:44:30 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 15:36:53 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ static int	prepare_command_input(t_data *data, char *cmd)
 
 	if (cmd[0] != '\0')
 		add_history(cmd);
-	if (data->tokens)
-		free_tokens(data->tokens);
-	data->tokens = NULL;
-	if (data->t_pipeline)
-		free_pipeline(data);
+	clear_command_state(data);
 	token_status = tokenizer(cmd, &data->tokens);
 	free(cmd);
 	if (token_status != 0)
@@ -57,26 +53,21 @@ static void	process_command(t_data *data, char *cmd)
 		return ;
 	if (lexer(data) != 0)
 	{
-		free_tokens(data->tokens);
-		data->tokens = NULL;
-		data->exit_code = 2;
-		return ;
+		clear_command_state(data);
+		return ((void)(data->exit_code = 2));
 	}
 	if (expand_token(data))
 		exit_minishell(data, "Expand failed", 1);
+	if (!data->tokens)
+		return ((void)(data->exit_code = 0));
 	if (create_pipeline(data) != 0)
 	{
-		free_pipeline(data);
-		free_tokens(data->tokens);
-		data->tokens = NULL;
-		data->exit_code = 2;
-		return ;
+		clear_command_state(data);
+		return ((void)(data->exit_code = 2));
 	}
 	if (execute_pipeline(data) < 0)
 		exit_minishell(data, "Pipeline execution failed", 1);
-	free_pipeline(data);
-	free_tokens(data->tokens);
-	data->tokens = NULL;
+	clear_command_state(data);
 }
 
 int	minishell(char **env)
@@ -94,7 +85,7 @@ int	minishell(char **env)
 		cmd = readline(PROMPT);
 		status = consume_signal_status();
 		if (!cmd)
-			exit_minishell(data, "EOF", 0);
+			exit_minishell(data, "EOF", data->exit_code);
 		if (handle_empty_signal(data, cmd, status))
 			continue ;
 		process_command(data, cmd);

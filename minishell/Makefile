@@ -18,6 +18,7 @@ SRCS = \
 	src/execution/execution_external_utils.c \
 	src/execution/exec_utils.c \
 	src/execution/pipeline_free.c \
+	src/execution/cmd_redirections.c \
 	src/serialize/tokenizer.c \
 	src/serialize/token_list.c \
 	src/serialize/lexer.c \

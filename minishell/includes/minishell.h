@@ -6,7 +6,7 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 23:28:47 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/25 00:07:32 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 15:29:47 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,21 @@ typedef enum e_lexin_ast
 	LEX_REDIRECT_OUT = 04,
 	LEX_APPEND = 05,
 	LEX_HEREDOC = 06,
-}						t_lexin_ast;
+}t_lexin_ast;
 
 typedef struct s_token
 {
 	char				*value;
 	t_lexin_ast			ast_type;
 	struct s_token		*next;
-}						t_token;
+}t_token;
+
+typedef struct s_redir
+{
+	t_lexin_ast			type;
+	char				*file;
+	struct s_redir		*next;
+}t_redir;
 
 typedef struct s_cmd_set
 {
@@ -57,12 +64,13 @@ typedef struct s_cmd_set
 	char				*outfile;
 	char				*heredoc_delim;
 	char				**args;
+	t_redir				*redirs;
 	int					out_append;
 	int					fd_in;
 	int					fd_out;
-	pid_t				pid;
+	pid_t					pid;
 	struct s_cmd_set	*next;
-}						t_cmd_set;
+}t_cmd_set;
 
 typedef struct s_data
 {
@@ -72,7 +80,7 @@ typedef struct s_data
 	int					cmd_count;
 	int					exit_code;
 	t_cmd_set			*t_pipeline;
-}						t_data;
+}t_data;
 
 typedef struct s_expand_state
 {
@@ -80,7 +88,7 @@ typedef struct s_expand_state
 	int					i;
 	int					j;
 	char				*newval;
-}						t_expand_state;
+}t_expand_state;
 
 typedef struct s_exec_state
 {
@@ -88,10 +96,10 @@ typedef struct s_exec_state
 	int					prev_fd;
 	int					status;
 	int					last_status;
-	pid_t				pid;
-	pid_t				last_pid;
-	pid_t				waited_pid;
-}						t_exec_state;
+	pid_t					pid;
+	pid_t					last_pid;
+	pid_t					waited_pid;
+}t_exec_state;
 
 int						minishell(char **env);
 int						tokenizer(const char *cmd, t_token **tokens);
@@ -106,6 +114,7 @@ void					free_pipeline(t_data *data);
 int						init_data(t_data *data, char **env);
 void					free_data(t_data *data);
 char					**copy_env(char **env);
+t_data					*init_shell_data(char **env);
 
 t_cmd_set				*new_cmd_set(char *name);
 int						add_arg_to_cmd_set(t_cmd_set *cmd_set, char *arg);
@@ -150,6 +159,7 @@ int						prepare_parent_input(t_data *data, t_cmd_set *cmd_set,
 							int *saved_stdio);
 int						prepare_parent_output(t_data *data, t_cmd_set *cmd_set,
 							int *saved_stdio);
+int						apply_cmd_redirections(t_cmd_set *cmd_set);
 int						is_valid_export_name(char *arg, int name_len);
 int						update_or_add_export_entry(t_data *data, char *arg,
 							int name_len, int has_equal);
@@ -173,5 +183,6 @@ void					run_pipeline_child(t_exec_state *state, t_cmd_set *step,
 void					set_pipeline_exit_code(t_data *data, int status);
 int						wait_heredoc_child(pid_t pid, int *fd,
 							t_cmd_set *cmd_set);
+void					clear_command_state(t_data *data);
 
 #endif

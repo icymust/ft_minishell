@@ -15,15 +15,15 @@
 static int	operator_error(char *value)
 {
 	if (!value)
-		fprintf(stderr, "Lexer error: operator token with null value\\n");
+		fprintf(stderr, "Lexer error: operator token with null value\n");
 	else if (ft_strncmp(value, "||", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '||'\\n");
+		fprintf(stderr, "Lexer error: unsupported operator '||'\n");
 	else if (ft_strncmp(value, "&&", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '&&'\\n");
+		fprintf(stderr, "Lexer error: unsupported operator '&&'\n");
 	else if (ft_strncmp(value, "&", 2) == 0)
-		fprintf(stderr, "Lexer error: unsupported operator '&'\\n");
+		fprintf(stderr, "Lexer error: unsupported operator '&'\n");
 	else
-		fprintf(stderr, "Lexer error: unknown operator '%s'\\n", value);
+		fprintf(stderr, "Lexer error: unknown operator '%s'\n", value);
 	return (1);
 }
 
@@ -46,32 +46,38 @@ int	lex_operators(t_token *token)
 	return (0);
 }
 
+static int	follows_as_arg(t_token *previous_token)
+{
+	if (!previous_token)
+		return (0);
+	if (previous_token->ast_type == LEX_COMMAND)
+		return (1);
+	if (previous_token->ast_type == LEX_ARGS)
+		return (1);
+	if (previous_token->ast_type == LEX_PATH)
+		return (1);
+	if (previous_token->ast_type == LEX_DELIMITER)
+		return (1);
+	return (0);
+}
+
 int	lex_words(t_token *token, t_token *previous_token)
 {
 	if (!token)
 		return (0);
-	if (previous_token == NULL)
+	if (!previous_token || previous_token->ast_type == LEX_PIPE)
 		token->ast_type = LEX_COMMAND;
-	else if (previous_token->ast_type == LEX_PIPE)
-		token->ast_type = LEX_COMMAND;
-	else if (previous_token->ast_type == LEX_REDIRECT_OUT)
-		token->ast_type = LEX_PATH;
-	else if (previous_token->ast_type == LEX_REDIRECT_IN)
-		token->ast_type = LEX_PATH;
-	else if (previous_token->ast_type == LEX_APPEND)
+	else if (previous_token->ast_type == LEX_REDIRECT_OUT
+		|| previous_token->ast_type == LEX_REDIRECT_IN
+		|| previous_token->ast_type == LEX_APPEND)
 		token->ast_type = LEX_PATH;
 	else if (previous_token->ast_type == LEX_HEREDOC)
 		token->ast_type = LEX_DELIMITER;
-	else if (previous_token->ast_type == LEX_COMMAND)
-		token->ast_type = LEX_ARGS;
-	else if (previous_token->ast_type == LEX_ARGS)
+	else if (follows_as_arg(previous_token))
 		token->ast_type = LEX_ARGS;
 	else
-	{
-		fprintf(stderr,
-			"Syntax error: unexpected token after redirection path\n");
-		return (1);
-	}
+		return (fprintf(stderr,
+				"Syntax error: unexpected token after redirection path\n"), 1);
 	return (0);
 }
 

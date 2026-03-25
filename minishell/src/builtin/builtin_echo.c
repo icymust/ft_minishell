@@ -6,16 +6,11 @@
 /*   By: martinmust <martinmust@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 22:15:31 by martinmust        #+#    #+#             */
-/*   Updated: 2026/03/24 23:35:56 by martinmust       ###   ########.fr       */
+/*   Updated: 2026/03/25 14:26:00 by martinmust       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
 
 static int	is_n_option(const char *s)
 {
@@ -35,26 +30,6 @@ static int	is_n_option(const char *s)
 	return (1);
 }
 
-static void	print_echo_arg(char *str)
-{
-	int	len;
-	int	start;
-	int	end;
-
-	if (!str)
-		return ;
-	len = (int)ft_strlen(str);
-	start = 0;
-	end = len;
-	if (len >= 2 && is_quote(str[0]) && str[0] == str[len - 1])
-	{
-		start = 1;
-		end = len - 1;
-	}
-	while (start < end)
-		printf("%c", str[start++]);
-}
-
 void	builtin_echo(t_cmd_set *cmd_set)
 {
 	int	newline;
@@ -62,7 +37,7 @@ void	builtin_echo(t_cmd_set *cmd_set)
 
 	newline = 1;
 	i = 0;
-	if (!cmd_set->args || !cmd_set->args || cmd_set->args[0] == NULL)
+	if (!cmd_set->args || cmd_set->args[0] == NULL)
 	{
 		printf("\n");
 		return ;
@@ -74,7 +49,7 @@ void	builtin_echo(t_cmd_set *cmd_set)
 	}
 	while (cmd_set->args[i])
 	{
-		print_echo_arg(cmd_set->args[i++]);
+		printf("%s", cmd_set->args[i++]);
 		if (cmd_set->args[i])
 			printf(" ");
 	}

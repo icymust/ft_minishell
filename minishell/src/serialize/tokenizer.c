@@ -74,8 +74,7 @@ static int	handle_word_token(const char **cmd_line, t_token **tokens)
 	char		quote;
 
 	start = *cmd_line;
-	while (**cmd_line && !is_space(**cmd_line)
-		&& !is_operator_char(**cmd_line))
+	while (**cmd_line && !is_space(**cmd_line) && !is_operator_char(**cmd_line))
 	{
 		if (**cmd_line == '\'' || **cmd_line == '\"')
 		{
@@ -83,8 +82,7 @@ static int	handle_word_token(const char **cmd_line, t_token **tokens)
 			while (**cmd_line && **cmd_line != quote)
 				(*cmd_line)++;
 			if (**cmd_line != quote)
-				return (fprintf(stderr,
-						"Syntax error: unclosed quote\n"), 1);
+				return (unclosed_quote_error());
 			if (!**cmd_line)
 				return (1);
 			(*cmd_line)++;

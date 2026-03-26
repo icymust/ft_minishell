@@ -60,7 +60,10 @@ static int	run_exit_builtin(t_data *data, t_cmd_set *cmd_set)
 		exit_minishell(data, NULL, 255);
 	}
 	if (cmd_set->args[1])
-		return (fprintf(stderr, "exit: too many arguments\n"), 1);
+	{
+		fprintf(stderr, "exit: too many arguments\n");
+		return (1);
+	}
 	exit_minishell(data, NULL, exit_code_from_arg(cmd_set->args[0]));
 	return (0);
 }

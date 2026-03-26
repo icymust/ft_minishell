@@ -102,7 +102,7 @@ int	execute_pipeline(t_data *data)
 		return (run_parent_builtin(data, step));
 	setup_wait_signals();
 	if (run_pipeline_steps(step, &state, data) < 0)
-		return (setup_signals(), -1);
+		return (restore_signals_fail());
 	wait_pipeline_children(&state);
 	setup_signals();
 	set_pipeline_exit_code(data, state.last_status);

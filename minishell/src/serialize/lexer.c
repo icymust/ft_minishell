@@ -76,8 +76,11 @@ int	lex_words(t_token *token, t_token *previous_token)
 	else if (follows_as_arg(previous_token))
 		token->ast_type = LEX_ARGS;
 	else
-		return (fprintf(stderr,
-				"Syntax error: unexpected token after redirection path\n"), 1);
+	{
+		fprintf(stderr,
+			"Syntax error: unexpected token after redirection path\n");
+		return (1);
+	}
 	return (0);
 }
 

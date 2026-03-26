@@ -18,11 +18,15 @@ static int	apply_input_redir(t_redir *redir)
 
 	fd = open(redir->file, O_RDONLY);
 	if (fd < 0)
-		return (perror(redir->file), 1);
+	{
+		perror(redir->file);
+		return (1);
+	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		close(fd);
-		return (perror("dup2"), 1);
+		perror("dup2");
+		return (1);
 	}
 	close(fd);
 	return (0);
@@ -40,7 +44,10 @@ static int	apply_output_redir(t_redir *redir)
 		flags |= O_TRUNC;
 	fd = open(redir->file, flags, 0644);
 	if (fd < 0)
-		return (perror(redir->file), 1);
+	{
+		perror(redir->file);
+		return (1);
+	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		close(fd);

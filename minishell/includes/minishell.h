@@ -16,6 +16,8 @@
 # include "../libft/includes/get_next_line.h"
 # include "../libft/includes/libft.h"
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -23,39 +25,37 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 
 # define PROMPT "Minishell>$ "
 
 typedef enum e_lexin_ast
 {
-	TOKEN_WORD = 0,
-	TOKEN_OPERATOR = 1,
-	LEX_COMMAND = 11,
-	LEX_ARGS = 12,
-	LEX_PATH = 13,
-	LEX_DELIMITER = 16,
-	LEX_PIPE = 02,
-	LEX_REDIRECT_IN = 03,
-	LEX_REDIRECT_OUT = 04,
-	LEX_APPEND = 05,
-	LEX_HEREDOC = 06,
-}t_lexin_ast;
+	TOKEN_WORD,
+	TOKEN_OPERATOR,
+	LEX_COMMAND,
+	LEX_ARGS,
+	LEX_PATH,
+	LEX_DELIMITER,
+	LEX_PIPE,
+	LEX_REDIRECT_IN,
+	LEX_REDIRECT_OUT,
+	LEX_APPEND,
+	LEX_HEREDOC,
+}						t_lexin_ast;
 
 typedef struct s_token
 {
 	char				*value;
 	t_lexin_ast			ast_type;
 	struct s_token		*next;
-}t_token;
+}						t_token;
 
 typedef struct s_redir
 {
 	t_lexin_ast			type;
 	char				*file;
 	struct s_redir		*next;
-}t_redir;
+}						t_redir;
 
 typedef struct s_cmd_set
 {
@@ -68,9 +68,9 @@ typedef struct s_cmd_set
 	int					out_append;
 	int					fd_in;
 	int					fd_out;
-	pid_t					pid;
+	pid_t				pid;
 	struct s_cmd_set	*next;
-}t_cmd_set;
+}						t_cmd_set;
 
 typedef struct s_data
 {
@@ -80,7 +80,7 @@ typedef struct s_data
 	int					cmd_count;
 	int					exit_code;
 	t_cmd_set			*t_pipeline;
-}t_data;
+}						t_data;
 
 typedef struct s_expand_state
 {
@@ -88,7 +88,7 @@ typedef struct s_expand_state
 	int					i;
 	int					j;
 	char				*newval;
-}t_expand_state;
+}						t_expand_state;
 
 typedef struct s_exec_state
 {
@@ -96,10 +96,10 @@ typedef struct s_exec_state
 	int					prev_fd;
 	int					status;
 	int					last_status;
-	pid_t					pid;
-	pid_t					last_pid;
-	pid_t					waited_pid;
-}t_exec_state;
+	pid_t				pid;
+	pid_t				last_pid;
+	pid_t				waited_pid;
+}						t_exec_state;
 
 int						minishell(char **env);
 int						tokenizer(const char *cmd, t_token **tokens);
@@ -184,5 +184,7 @@ void					set_pipeline_exit_code(t_data *data, int status);
 int						wait_heredoc_child(pid_t pid, int *fd,
 							t_cmd_set *cmd_set);
 void					clear_command_state(t_data *data);
+int						restore_signals_fail(void);
+int						unclosed_quote_error(void);
 
 #endif

@@ -19,8 +19,10 @@ static int	handle_redirect_token(t_data *data, t_cmd_set **current_set,
 		&& token->ast_type != LEX_REDIRECT_OUT && token->ast_type != LEX_APPEND)
 		return (0);
 	if (!token->next)
-		return (fprintf(stderr, "Syntax error: missing redirection target\n"),
-			1);
+	{
+		fprintf(stderr, "Syntax error: missing redirection target\n");
+		return (1);
+	}
 	if (!*current_set)
 	{
 		*current_set = new_cmd_in_pl(data, NULL, NULL);
@@ -90,7 +92,10 @@ static int	handle_pipe_token(t_data *data, t_cmd_set **current_set,
 	if (token->ast_type != LEX_PIPE)
 		return (0);
 	if (!previous || !token->next || previous->ast_type == LEX_PIPE)
-		return (fprintf(stderr, "Syntax error: pipe\n"), 1);
+	{
+		fprintf(stderr, "Syntax error: pipe\n");
+		return (1);
+	}
 	if (token->next->ast_type != LEX_COMMAND
 		&& token->next->ast_type != LEX_REDIRECT_IN
 		&& token->next->ast_type != LEX_REDIRECT_OUT
